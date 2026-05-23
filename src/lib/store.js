@@ -35,6 +35,72 @@ const INITIAL_PROPERTIES = [
     status: 'available',
     isMock: true,
     created_at: new Date().toISOString()
+  },
+  {
+    id: '2',
+    title: 'Minimalist Loft Laureles',
+    price: 4500000,
+    location: 'Medellín',
+    neighborhood: 'Laureles',
+    description: 'Un espacio moderno y funcional en el barrio más tradicional de Medellín. Perfecto para nómadas digitales y parejas que buscan estilo y comodidad.',
+    bedrooms: 1,
+    bathrooms: 1,
+    area_m2: 65,
+    capacity: 2,
+    amenities: ['Fibra Óptica', 'Balcón', 'Cocina Integral', 'Lavandería'],
+    pet_friendly: true,
+    images: [
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80'
+    ],
+    videoUrl: '',
+    category: 'apartment',
+    status: 'available',
+    isMock: true,
+    created_at: new Date(Date.now() - 100000).toISOString()
+  },
+  {
+    id: '3',
+    title: 'Finca El Retiro Paradise',
+    price: 8000000,
+    location: 'Antioquia',
+    neighborhood: 'El Retiro',
+    description: 'Espectacular finca con clima perfecto, rodeada de bosque nativo. Diseño arquitectónico que integra la naturaleza con el confort moderno.',
+    bedrooms: 5,
+    bathrooms: 4,
+    area_m2: 450,
+    capacity: 12,
+    amenities: ['Piscina Climatizada', 'Zona BBQ', 'Chimenea', 'Cancha Múltiple'],
+    pet_friendly: true,
+    images: [
+      'https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=1200&q=80'
+    ],
+    videoUrl: '',
+    category: 'finca',
+    status: 'available',
+    isMock: true,
+    created_at: new Date(Date.now() - 200000).toISOString()
+  },
+  {
+    id: '4',
+    title: 'Yate de Lujo 45ft Guatapé',
+    price: 3500000,
+    location: 'Antioquia',
+    neighborhood: 'Guatapé',
+    description: 'Disfruta de la mejor experiencia en la represa. Sistema de sonido JL Audio, capitán experimentado y todo el equipo para deportes acuáticos.',
+    bedrooms: 1,
+    bathrooms: 1,
+    area_m2: 0,
+    capacity: 15,
+    amenities: ['Sistema de Sonido', 'Capitán Incluido', 'Bebidas', 'Asoleadoras'],
+    pet_friendly: false,
+    images: [
+      'https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?auto=format&fit=crop&w=1200&q=80'
+    ],
+    videoUrl: '',
+    category: 'vehicle',
+    status: 'available',
+    isMock: true,
+    created_at: new Date(Date.now() - 300000).toISOString()
   }
 ];
 

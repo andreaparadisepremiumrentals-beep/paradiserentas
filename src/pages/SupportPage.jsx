@@ -63,7 +63,7 @@ export default function SupportPage() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // In production this would call a Supabase edge function or API
+    // In production this would call a Firebase function or API
     setSent(true);
     setTimeout(() => setSent(false), 4000);
     setFormData({ name: '', email: '', message: '' });

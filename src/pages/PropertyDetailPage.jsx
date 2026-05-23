@@ -5,7 +5,7 @@ import { useParams, Link } from 'react-router-dom';
 import { 
   MapPin, Bed, Bath, Maximize, CheckCircle, 
   MessageCircle, Phone, Star, ChevronLeft, 
-  Wifi, Car, Tv, Wind, Coffee, Plus, X, ChevronRight, Loader2
+  Wifi, Car, Tv, Wind, Coffee, Plus, X, ChevronRight, Loader2, Video
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';

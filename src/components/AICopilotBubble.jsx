@@ -10,7 +10,7 @@ import { geminiModel } from '../lib/gemini';
 
 // ─── KNOWLEDGE BASE ─────────────────────────────────────
 // Injected context so the AI can respond intelligently
-// even without full Supabase property data.
+// even without full property data.
 const KNOWLEDGE_BASE = `
 ## PARADISE PREMIUM — BASE DE CONOCIMIENTO INTERNA
 
