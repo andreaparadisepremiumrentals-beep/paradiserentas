@@ -27,7 +27,7 @@ jobs:
           VITE_R2_BUCKET_NAME: ${{ secrets.VITE_R2_BUCKET_NAME }}
           VITE_R2_PUBLIC_DOMAIN: ${{ secrets.VITE_R2_PUBLIC_DOMAIN }}
         run: |
-          npm ci
+          npm install
           npx vite build
           echo "www.paradiserentas.com" > dist/CNAME
 
