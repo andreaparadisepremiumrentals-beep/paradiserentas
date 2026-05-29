@@ -3,8 +3,8 @@
 // --------------------------------------------------------
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://placeholder.supabase.co';
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'placeholder-key';
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://jhajqdyrbxwxztieihjz.supabase.co';
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_HFhBhqIy7UusI12pG_iL9w_PdB7Wt_B';
 
 // Singleton instance
 export let supabase = createClient(supabaseUrl, supabaseKey);
