@@ -62,7 +62,7 @@ export default function FincasPage() {
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
           <Mountain size={28} className="text-accent-400" />
-          <h1 className="heading-display text-3xl md:text-4xl text-paradise-50">Fincas Exclusivas</h1>
+          <h1 className="heading-display text-4xl md:text-5xl text-paradise-50">Fincas Exclusivas</h1>
         </div>
         <p className="text-paradise-400">Retiros campestres y propiedades de recreo</p>
       </div>

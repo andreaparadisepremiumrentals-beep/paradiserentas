@@ -1,16 +1,4 @@
-import { db } from './firebase';
-import { 
-  collection, 
-  getDocs, 
-  getDoc, 
-  doc, 
-  addDoc, 
-  updateDoc, 
-  deleteDoc, 
-  query, 
-  orderBy,
-  setDoc
-} from "firebase/firestore";
+import { supabase, authorizeSupabase } from './supabase';
 
 const INITIAL_PROPERTIES = [
   {
@@ -133,20 +121,15 @@ export const getProperties = async () => {
 
   if (shouldFetch) {
     try {
-      const q = query(collection(db, "properties"), orderBy("created_at", "desc"));
-      const querySnapshot = await getDocs(q);
-      const data = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
+      const { data, error } = await supabase.from('properties').select('*').order('created_at', { ascending: false });
 
-      if (data.length > 0) {
+      if (!error && data && data.length > 0) {
         await storage.set(data);
         localStorage.setItem(SYNC_KEY, Date.now().toString());
         return data;
       }
     } catch (err) {
-      console.error('Firebase Fetch exception:', err);
+      console.error('Supabase Fetch exception:', err);
     }
   }
 
@@ -155,14 +138,13 @@ export const getProperties = async () => {
 
 export const getProperty = async (id) => {
   try {
-    const docRef = doc(db, "properties", id);
-    const docSnap = await getDoc(docRef);
+    const { data, error } = await supabase.from('properties').select('*').eq('id', id).single();
     
-    if (docSnap.exists()) {
-      return { id: docSnap.id, ...docSnap.data() };
+    if (!error && data) {
+      return data;
     }
   } catch (err) {
-    console.error('Firebase getProperty error:', err);
+    console.error('Supabase getProperty error:', err);
   }
   
   const all = await storage.get();
@@ -172,17 +154,18 @@ export const getProperty = async (id) => {
 export const isAuthorized = (rawEmail) => {
   const partnerEmail = (rawEmail || '').trim().toLowerCase();
   const AUTHORIZED_NAMES = ['marlon', 'andrea', 'gustavo', 'david'];
-  return AUTHORIZED_NAMES.some(name => partnerEmail.includes(name)) || 
+  const isAuth = AUTHORIZED_NAMES.some(name => partnerEmail.includes(name)) || 
          partnerEmail.endsWith('@paradiserentas.com');
+  if (isAuth) authorizeSupabase('paradise-premium-secret-2024');
+  return isAuth;
 };
 
 export const addProperty = async (prop) => {
   try {
-    const docRef = await addDoc(collection(db, "properties"), {
-      ...prop,
-      created_at: new Date().toISOString()
-    });
-    const newData = { id: docRef.id, ...prop };
+    const propToInsert = { ...prop, created_at: new Date().toISOString() };
+    const { data, error } = await supabase.from('properties').insert([propToInsert]).select();
+    if (error) throw new Error(error.message);
+    const newData = data[0];
     const all = await storage.get();
     await storage.set([newData, ...all]);
     return newData;
@@ -191,10 +174,18 @@ export const addProperty = async (prop) => {
   }
 };
 
+const isUuid = (str) => {
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  return uuidRegex.test(str);
+};
+
 export const removeProperty = async (id, email) => {
   if (!isAuthorized(email)) throw new Error('No autorizado');
   try {
-    await deleteDoc(doc(db, "properties", id));
+    if (isUuid(id)) {
+      const { error } = await supabase.from('properties').delete().eq('id', id);
+      if (error) throw error;
+    }
     const all = await storage.get();
     const updated = all.filter(p => String(p.id) !== String(id));
     await storage.set(updated);
@@ -206,13 +197,24 @@ export const removeProperty = async (id, email) => {
 
 export const updateProperty = async (id, updates) => {
   try {
-    const docRef = doc(db, "properties", id);
-    await updateDoc(docRef, updates);
+    let updatedProperty = null;
+    if (isUuid(id)) {
+      const { data, error } = await supabase.from('properties').update(updates).eq('id', id).select();
+      if (error) throw error;
+      updatedProperty = data && data[0];
+    }
     const all = await storage.get();
     const idx = all.findIndex(p => String(p.id) === String(id));
     if (idx !== -1) {
-      all[idx] = { ...all[idx], ...updates };
+      all[idx] = updatedProperty || { ...all[idx], ...updates };
       await storage.set(all);
+    } else if (!isUuid(id)) {
+      const mockIdx = INITIAL_PROPERTIES.findIndex(p => String(p.id) === String(id));
+      if (mockIdx !== -1) {
+        const updatedMock = { ...INITIAL_PROPERTIES[mockIdx], ...updates };
+        const mergedList = INITIAL_PROPERTIES.map(p => String(p.id) === String(id) ? updatedMock : p);
+        await storage.set(mergedList);
+      }
     }
     return all;
   } catch (e) {
@@ -222,11 +224,10 @@ export const updateProperty = async (id, updates) => {
 
 export const saveSignedContract = async (contractData) => {
   try {
-    const docRef = await addDoc(collection(db, "signed_contracts"), {
-      ...contractData,
-      created_at: new Date().toISOString()
-    });
-    return { id: docRef.id, ...contractData };
+    const contractToInsert = { ...contractData, created_at: new Date().toISOString() };
+    const { data, error } = await supabase.from('signed_contracts').insert([contractToInsert]).select();
+    if (error) throw new Error(error.message);
+    return data[0];
   } catch (e) {
     console.error('Error saving contract:', e);
     throw e;
@@ -235,9 +236,8 @@ export const saveSignedContract = async (contractData) => {
 
 export const getPendingContract = async (id) => {
   try {
-    const docRef = doc(db, "pending_contracts", id);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) return { id: docSnap.id, ...docSnap.data() };
+    const { data, error } = await supabase.from('pending_contracts').select('*').eq('id', id).single();
+    if (!error && data) return data;
   } catch (e) {
     console.error('Error fetching pending contract:', e);
   }
@@ -246,12 +246,10 @@ export const getPendingContract = async (id) => {
 
 export const createPendingContract = async (contractData) => {
   try {
-    const docRef = await addDoc(collection(db, "pending_contracts"), {
-      ...contractData,
-      status: 'PENDING',
-      created_at: new Date().toISOString()
-    });
-    return docRef.id;
+    const contractToInsert = { ...contractData, status: 'PENDING', created_at: new Date().toISOString() };
+    const { data, error } = await supabase.from('pending_contracts').insert([contractToInsert]).select();
+    if (error) throw new Error(error.message);
+    return data[0].id;
   } catch (e) {
     console.error('Error creating pending contract:', e);
     throw e;
@@ -260,11 +258,12 @@ export const createPendingContract = async (contractData) => {
 
 export const saveInventory = async (propertyId, inventoryData) => {
   try {
-    const docRef = doc(db, "inventories", propertyId);
-    await setDoc(docRef, {
+    const { error } = await supabase.from('inventories').upsert({
+      id: propertyId,
       items: inventoryData,
       updated_at: new Date().toISOString()
     });
+    if (error) throw new Error(error.message);
   } catch (e) {
     console.error('Error saving inventory:', e);
     throw e;
@@ -273,9 +272,8 @@ export const saveInventory = async (propertyId, inventoryData) => {
 
 export const getInventory = async (propertyId) => {
   try {
-    const docRef = doc(db, "inventories", propertyId);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) return docSnap.data().items;
+    const { data, error } = await supabase.from('inventories').select('items').eq('id', propertyId).single();
+    if (!error && data) return data.items;
   } catch (e) {
     console.error('Error fetching inventory:', e);
   }

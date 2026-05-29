@@ -65,13 +65,13 @@ export default function HomePage() {
     <div className="flex flex-col animate-fade-in relative">
       
       {/* ─── Hero Section with Medellín Image ─── */}
-      <section className="relative min-h-[92vh] flex items-center px-6 md:px-12 py-20 overflow-hidden">
+      <section className="relative min-h-[93vh] flex items-center px-6 md:px-12 pt-28 pb-20 md:pt-36 md:pb-22 overflow-hidden">
         {/* Background image instead of video */}
         <div className="absolute inset-0 z-0">
           <img 
             src="/assets/hero-medellin.png" 
             alt="" 
-            className="w-full h-full object-cover brightness-[0.35] hero-bg-animate"
+            className="w-full h-full object-cover brightness-[0.50] hero-bg-animate"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-paradise-950 via-paradise-950/60 to-paradise-950/20" />
           <div className="absolute inset-0 bg-gradient-to-t from-paradise-950 via-transparent to-transparent" />
@@ -79,14 +79,14 @@ export default function HomePage() {
 
         <div className="relative z-10 w-full grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
           <div className="lg:col-span-3">
-            <h1 className="heading-display text-5xl md:text-6xl lg:text-[5.5rem] text-paradise-50 leading-[1.05] mb-8">
+            <h1 className="text-5xl md:text-6xl lg:text-[5.2rem] text-paradise-50 leading-[1.05] mb-8 font-sans font-black tracking-tighter text-shadow-premium">
               {t.heroTitle_1} <br />
-              <span className="text-emerald-400 font-serif italic lowercase opacity-95" style={{ fontFamily: "'Playfair Display', serif" }}>
-                <span>{t.heroTitle_2}</span>
+              <span className="text-emerald-400 font-sans font-black italic tracking-tighter text-shadow-premium">
+                {t.heroTitle_2}
               </span> <br />
               {t.heroTitle_3}
             </h1>
-            <p className="text-paradise-200 text-lg md:text-xl max-w-xl mb-12 leading-relaxed font-light tracking-wide">
+            <p className="text-paradise-200 text-lg md:text-xl max-w-xl mb-12 leading-relaxed font-light tracking-wide text-shadow-subtle">
               {t.heroDesc}
             </p>
 
@@ -110,25 +110,25 @@ export default function HomePage() {
           {/* MÉTRICAS */}
           <div className="lg:col-span-2 flex flex-col gap-12 items-end lg:pr-12">
             <div className="text-right">
-               <p className="text-7xl font-black text-emerald-glow mb-1 tracking-tighter" style={{ color: '#10b981', textShadow: '0 0 30px rgba(16,185,129,0.3)' }}>200+</p>
-               <p className="text-[11px] text-paradise-300 font-bold uppercase tracking-[0.4em] opacity-80">{t.stats_premium}</p>
+               <p className="text-7xl font-black mb-1 tracking-tighter text-shadow-premium" style={{ color: '#10b981' }}>200+</p>
+               <p className="text-[11px] text-paradise-300 font-bold uppercase tracking-[0.4em] opacity-80 text-shadow-subtle">{t.stats_premium}</p>
             </div>
             
             <div className="text-right translate-x-[-20%]">
-               <p className="text-7xl font-black text-paradise-50 mb-1 tracking-tighter">98%</p>
-               <p className="text-[11px] text-emerald-400/70 font-bold uppercase tracking-[0.4em] opacity-80">{t.stats_satisfaction}</p>
+               <p className="text-7xl font-black text-paradise-50 mb-1 tracking-tighter text-shadow-premium">98%</p>
+               <p className="text-[11px] text-emerald-400/70 font-bold uppercase tracking-[0.4em] opacity-80 text-shadow-subtle">{t.stats_satisfaction}</p>
             </div>
  
             <div className="text-right">
-               <p className="text-7xl font-black text-paradise-50 mb-1 tracking-tighter">12+</p>
-               <p className="text-[11px] text-paradise-300 font-bold uppercase tracking-[0.4em] opacity-80">{t.stats_years}</p>
+               <p className="text-7xl font-black text-paradise-50 mb-1 tracking-tighter text-shadow-premium">12+</p>
+               <p className="text-[11px] text-paradise-300 font-bold uppercase tracking-[0.4em] opacity-80 text-shadow-subtle">{t.stats_years}</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* ─── Categorías ─── */}
-      <section className="px-6 md:px-12 -mt-20 relative z-20 pb-32">
+      <section className="px-6 md:px-12 -mt-8 relative z-20 pb-32">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {CATEGORIES.map((cat, i) => (
             <Link
@@ -162,36 +162,36 @@ export default function HomePage() {
               </Link>
            </div>
 
-           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {recentProperties.map((prop) => (
-                <div key={prop.id} className="group relative rounded-[48px] overflow-hidden shadow-2xl transition-all duration-1000 border border-white/5">
+                <div key={prop.id} className="group relative rounded-[32px] overflow-hidden shadow-2xl transition-all duration-1000 border border-white/5">
                    <Link 
                      to={`/property/${prop.id}`} 
                      className="block"
                    >
-                     <div className="relative h-[550px] overflow-hidden">
+                     <div className="relative h-[420px] overflow-hidden">
                         <img src={prop.images?.[0]} alt={prop.title} className="w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-110" />
                         <div className="absolute inset-0 bg-gradient-to-t from-paradise-950 via-paradise-950/20 to-transparent opacity-90" />
                         
-                        <div className="absolute top-10 left-10">
-                           <div className="bg-emerald-500/20 backdrop-blur-md border border-emerald-500/20 text-emerald-300 text-[10px] font-bold px-6 py-2.5 rounded-full uppercase tracking-widest">
+                        <div className="absolute top-6 left-6">
+                           <div className="bg-emerald-500/20 backdrop-blur-md border border-emerald-500/20 text-emerald-300 text-[9px] font-bold px-4 py-2 rounded-full uppercase tracking-widest">
                              {prop.category}
                            </div>
                         </div>
 
-                        <div className="absolute bottom-12 left-12 right-12">
-                           <div className="flex justify-between items-end mb-6">
+                        <div className="absolute bottom-8 left-8 right-8">
+                           <div className="flex flex-col gap-4 mb-4">
                               <div>
-                                 <h3 className="text-3xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors uppercase tracking-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
+                                 <h3 className="text-xl font-black text-white mb-1 group-hover:text-emerald-400 transition-colors uppercase tracking-tighter line-clamp-1">
                                    {prop.isMock ? `(X) ${prop.title}` : prop.title}
                                  </h3>
-                                 <p className="flex items-center gap-2 text-paradise-300 font-medium">
-                                   <MapPin size={18} className="text-emerald-500" /> {prop.neighborhood || prop.location}
+                                 <p className="flex items-center gap-1.5 text-paradise-300 text-xs font-medium">
+                                   <MapPin size={14} className="text-emerald-500" /> {prop.neighborhood || prop.location}
                                  </p>
                               </div>
-                              <div className="text-right">
-                                 <p className="text-[10px] text-emerald-400 font-bold uppercase tracking-widest mb-1">Desde</p>
-                                 <p className="text-3xl font-black text-white">
+                              <div className="flex justify-between items-end border-t border-white/10 pt-3">
+                                 <span className="text-[9px] text-emerald-400 font-bold uppercase tracking-widest">Desde</span>
+                                 <p className="text-xl font-black text-white">
                                    {new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(prop.price)}
                                  </p>
                               </div>
@@ -204,9 +204,9 @@ export default function HomePage() {
                    {/* Delete Trigger — Visible to Partners */}
                    <button 
                      onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleDeleteTrigger(prop.id); }}
-                     className="absolute z-20 top-6 right-6 bg-red-500/80 backdrop-blur-md text-white p-4 rounded-full hover:bg-red-600 transition-all shadow-2xl opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100"
+                     className="absolute z-20 top-6 right-6 bg-red-500/80 backdrop-blur-md text-white p-3 rounded-full hover:bg-red-600 transition-all shadow-2xl opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100"
                    >
-                     <Trash2 size={20} />
+                     <Trash2 size={16} />
                    </button>
                 </div>
               ))}

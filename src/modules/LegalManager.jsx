@@ -18,7 +18,7 @@ import {
   Type
 } from 'lucide-react';
 import RemoteSignModal from '../components/RemoteSignModal';
-import { geminiModel } from '../lib/gemini';
+import { deepseekModel } from '../lib/deepseek';
 import { getProperties, saveSignedContract } from '../lib/store';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -216,7 +216,7 @@ export default function LegalManager({ selectedRes = null }) {
 
       const userPrompt = `Datos de la reserva: ${JSON.stringify(activeBooking)}\nCampos a completar: ${JSON.stringify(fields)}`;
 
-      const result = await geminiModel.generateContent([systemPrompt, userPrompt]);
+      const result = await deepseekModel.generateContent([systemPrompt, userPrompt]);
       const response = await result.response;
       const text = response.text();
 
@@ -310,7 +310,7 @@ export default function LegalManager({ selectedRes = null }) {
   };
 
   return (
-    <div className="space-y-8 lg:grid lg:grid-cols-12 lg:gap-10 lg:space-y-0 pb-20">
+    <div className="max-w-7xl mx-auto space-y-8 lg:grid lg:grid-cols-12 lg:gap-10 lg:space-y-0 pb-20">
       {/* Sidebar Controls */}
       <div className="lg:col-span-4 space-y-6">
         {/* Booking Selector */}
@@ -450,27 +450,39 @@ export default function LegalManager({ selectedRes = null }) {
         <div className="grid grid-cols-2 gap-3">
           <button
             onClick={() => setIsRemoteModalOpen(true)}
-            className="col-span-2 flex items-center justify-center gap-3 py-5 bg-[#B8734A] text-white rounded-2xl text-xs font-bold uppercase tracking-[0.2em] shadow-2xl shadow-[#B8734A]/30 hover:scale-[1.02] transition-all mb-2"
+            className="col-span-2 flex items-center justify-center py-5 bg-[#B8734A] text-white rounded-2xl text-xs font-bold uppercase tracking-[0.2em] shadow-2xl shadow-[#B8734A]/30 hover:scale-[1.02] transition-all mb-2 px-4"
           >
-            <Share2 size={16} /> Enviar para Firma
+            <span className="text-center leading-tight">
+              <Share2 size={16} className="inline-block mr-2 align-middle -mt-0.5 shrink-0" />
+              Enviar para Firma
+            </span>
           </button>
           <button
             onClick={handleSave}
-            className="flex items-center justify-center gap-2 py-4 bg-emerald-600 text-white rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:brightness-110 transition-all shadow-xl shadow-emerald-500/20"
+            className="flex items-center justify-center py-4 px-3 bg-emerald-600 text-white rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:brightness-110 transition-all shadow-md"
           >
-            <CheckCircle2 size={14} /> Guardar
+            <span className="text-center leading-tight">
+              <CheckCircle2 size={14} className="inline-block mr-1.5 align-middle -mt-0.5 shrink-0" />
+              Guardar
+            </span>
           </button>
           <button
             onClick={handleDownloadPDF}
-            className="flex items-center justify-center gap-2 py-4 bg-[#1A4D2E] text-white border border-[#1A4D2E] rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:brightness-110 transition-all shadow-xl shadow-[#1A4D2E]/20"
+            className="flex items-center justify-center py-4 px-3 bg-[#1A4D2E] text-white border border-[#1A4D2E] rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:brightness-110 transition-all shadow-md"
           >
-            <Download size={14} /> Descargar PDF Premium
+            <span className="text-center leading-tight">
+              <Download size={14} className="inline-block mr-1.5 align-middle -mt-0.5 shrink-0" />
+              Descargar PDF Premium
+            </span>
           </button>
           <button
             onClick={handlePrint}
-            className="flex items-center justify-center gap-2 py-4 bg-white/5 text-white border border-white/10 rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:bg-white/10 transition-all"
+            className="flex items-center justify-center py-4 px-3 bg-white/5 text-white border border-white/10 rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:bg-white/10 transition-all"
           >
-            <Printer size={14} /> Imprimir Directo
+            <span className="text-center leading-tight">
+              <Printer size={14} className="inline-block mr-1.5 align-middle -mt-0.5 shrink-0" />
+              Imprimir Directo
+            </span>
           </button>
         </div>
 

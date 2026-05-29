@@ -62,7 +62,7 @@ export default function ApartmentsPage() {
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
           <Building2 size={28} className="text-emerald-400" />
-          <h1 className="heading-display text-3xl md:text-4xl text-paradise-50">
+          <h1 className="heading-display text-4xl md:text-5xl text-paradise-50">
             Apartamentos & Casas
           </h1>
         </div>

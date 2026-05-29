@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   Scale
 } from 'lucide-react';
+
 import VirtualStaging from '../modules/VirtualStaging';
 import DescriptionGenerator from '../modules/DescriptionGenerator';
 import ValuationAI from '../modules/ValuationAI';
@@ -65,8 +66,9 @@ export default function AICenterPage() {
   const ActiveComponent = TABS.find((t) => t.id === activeTab)?.component || VirtualStaging;
 
   return (
-    <div className="p-6 md:p-10 animate-fade-in">
-      <div className="mb-10">
+    <div className="p-6 md:p-10 animate-fade-in w-full flex flex-col items-center">
+      {/* Header Container - Reverted to original wide layout max-w-8xl */}
+      <div className="mb-10 w-full max-w-8xl px-4 md:px-0">
         <div className="flex items-center gap-4 mb-2">
           <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-paradise-900 to-accent-600 flex items-center justify-center border border-accent-500/30">
             <Sparkles size={24} className="text-accent-400" />
@@ -90,25 +92,29 @@ export default function AICenterPage() {
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-2 mb-10">
-        {visibleTabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center gap-2 px-5 py-3 rounded-2xl text-xs font-bold uppercase tracking-widest transition-all duration-300 border ${
-              activeTab === tab.id
-                ? 'bg-accent-500/20 text-accent-400 border-accent-500/40 shadow-xl scale-105'
-                : 'text-paradise-500 bg-paradise-900/40 border-paradise-800 hover:text-paradise-200'
-            }`}
-          >
-            <tab.icon size={16} />
-            {tab.label}
-            {tab.adminOnly && <Lock size={12} className="ml-1 opacity-60" />}
-          </button>
-        ))}
+      {/* Menu Container - Significantly wider (max-w-8xl) to allow full text width without wrapping */}
+      <div className="mb-10 w-full max-w-8xl px-4 md:px-0">
+        <div className="flex flex-row overflow-x-auto justify-start xl:justify-center gap-3 w-full pb-3 scroll-smooth no-scrollbar">
+          {visibleTabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl text-[10px] lg:text-xs font-bold uppercase tracking-widest transition-all duration-300 border shrink-0 whitespace-nowrap text-center cursor-pointer ${
+                activeTab === tab.id
+                  ? 'bg-accent-500/20 text-accent-400 border-accent-500/40 shadow-xl scale-[1.02] z-10'
+                  : 'text-paradise-500 bg-paradise-900/40 border-paradise-800 hover:text-paradise-200 hover:border-paradise-700/60'
+              }`}
+            >
+              <tab.icon size={15} className="shrink-0" />
+              <span>{tab.label}</span>
+              {tab.adminOnly && <Lock size={11} className="ml-1 opacity-60 shrink-0" />}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div className="max-w-4xl">
+      {/* Active Component Container - Constrained to max-w-7xl to leave beautiful spacing on the sides */}
+      <div className="w-full max-w-7xl mx-auto px-4 md:px-0">
         <ActiveComponent />
       </div>
 

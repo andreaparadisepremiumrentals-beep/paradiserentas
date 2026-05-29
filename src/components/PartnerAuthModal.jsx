@@ -60,7 +60,7 @@ export default function PartnerAuthModal({ isOpen, onClose, onConfirm, lang }) {
 
             <button 
               type="submit"
-              className="w-full bg-emerald-500 hover:bg-emerald-400 text-paradise-950 py-6 rounded-3xl text-[10px] uppercase font-black tracking-[0.3em] shadow-[0_15px_35px_rgba(16,185,129,0.25)] transition-all active:scale-[0.98]"
+              className="w-full bg-emerald-500 hover:bg-emerald-400 text-paradise-950 py-6 rounded-3xl text-[10px] uppercase font-black tracking-[0.3em] shadow-md transition-all active:scale-[0.98]"
             >
               {lang === 'es' ? 'Confirmar Identidad' : 'Confirm Identity'}
             </button>

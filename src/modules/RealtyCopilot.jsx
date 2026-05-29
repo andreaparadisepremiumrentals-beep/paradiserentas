@@ -2,7 +2,7 @@
 // RealtyCopilot — Módulo D: Conversational property search
 // --------------------------------------------------------
 import { useState, useRef, useEffect } from 'react';
-import { getModel } from '../lib/gemini';
+import { getModel } from '../lib/deepseek';
 import { getProperties } from '../lib/store';
 import ChatBubble from '../components/ChatBubble';
 import PropertyCard from '../components/PropertyCard';

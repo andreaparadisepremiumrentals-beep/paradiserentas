@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { Mail, Instagram, Facebook, MapPin, Gem } from 'lucide-react';
+import { Mail, Instagram, Facebook, Youtube, MapPin, Gem } from 'lucide-react';
 
 export default function Footer({ lang, t }) {
   const currentYear = new Date().getFullYear();
@@ -9,37 +9,38 @@ export default function Footer({ lang, t }) {
       {/* Decorative Gradient Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px bg-gradient-to-r from-transparent via-orange-500/50 to-transparent" />
       
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16 md:gap-8">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-y-12 md:gap-x-6 md:-translate-x-3">
         {/* Brand Section */}
-        <div className="col-span-1 md:col-span-1 flex flex-col items-start gap-6">
-          <div className="flex items-center gap-3">
-            <Gem className="text-orange-500" size={32} />
-            <div className="flex flex-col leading-tight">
-              <span className="font-extrabold text-xl tracking-tight text-white" style={{ fontFamily: "'Playfair Display', serif" }}>
-                Paradise Premium
-              </span>
-              <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-orange-400/80">
-                Rentals & Sales
-              </span>
+        <div className="col-span-1 md:col-span-4 lg:col-span-3 flex flex-col items-center text-center gap-6">
+          <NavLink to="/" className="flex items-center group flex-shrink-0">
+            <div className="h-[58px] md:h-[72px] flex items-center overflow-hidden">
+              <img 
+                src="/assets/logoparadise.png?v=3" 
+                alt="Paradise Premium Rentals" 
+                className="h-full object-contain transition-all group-hover:scale-105"
+              />
             </div>
-          </div>
-          <p className="text-sm text-paradise-400 font-light leading-relaxed max-w-xs">
+          </NavLink>
+          <p className="text-sm text-paradise-400 font-light leading-relaxed max-w-[220px] mx-auto">
             {lang === 'es' 
               ? 'Elevando el estándar de las rentas vacacionales de lujo en Medellín y Antioquia.' 
               : 'Elevating the standard of luxury vacation rentals in Medellín and Antioquia.'}
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center justify-center gap-4">
             <a href="https://instagram.com" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-paradise-300 hover:text-orange-400 hover:border-orange-500/30 transition-all">
               <Instagram size={18} />
             </a>
             <a href="https://facebook.com" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-paradise-300 hover:text-orange-400 hover:border-orange-500/30 transition-all">
               <Facebook size={18} />
             </a>
+            <a href="https://youtube.com" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-paradise-300 hover:text-orange-400 hover:border-orange-500/30 transition-all">
+              <Youtube size={18} />
+            </a>
           </div>
         </div>
 
         {/* Quick Links */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 col-span-1 md:col-span-2 md:col-start-6 lg:col-span-2 lg:col-start-5">
           <h4 className="text-xs font-black text-orange-500 uppercase tracking-widest">
             {lang === 'es' ? 'Navegación' : 'Navigation'}
           </h4>
@@ -48,11 +49,12 @@ export default function Footer({ lang, t }) {
             <NavLink to="/fincas" className="text-sm text-paradise-300 hover:text-white transition-colors">{t.nav_fincas}</NavLink>
             <NavLink to="/water-vehicles" className="text-sm text-paradise-300 hover:text-white transition-colors">{t.nav_vehicles}</NavLink>
             <NavLink to="/medellin-guide" className="text-sm text-paradise-300 hover:text-white transition-colors">{t.nav_medellin}</NavLink>
+            <NavLink to="/ai-center" className="text-sm text-paradise-300 hover:text-white transition-colors">{t.nav_ai}</NavLink>
           </nav>
         </div>
 
         {/* Legal Links */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 col-span-1 md:col-span-3 md:col-start-8 lg:col-span-2 lg:col-start-8">
           <h4 className="text-xs font-black text-orange-500 uppercase tracking-widest">
             {lang === 'es' ? 'Legal' : 'Legal'}
           </h4>
@@ -70,7 +72,7 @@ export default function Footer({ lang, t }) {
         </div>
 
         {/* Contact */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 col-span-1 md:col-span-2 md:col-start-11 lg:col-span-2 lg:col-start-11 md:-translate-x-6">
           <h4 className="text-xs font-black text-orange-500 uppercase tracking-widest">
             {lang === 'es' ? 'Contacto' : 'Contact'}
           </h4>
@@ -90,7 +92,7 @@ export default function Footer({ lang, t }) {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 md:-translate-x-3">
         <p className="text-[10px] font-bold text-paradise-500 uppercase tracking-[0.25em]">
           &copy; {currentYear} Paradise Premium Rentals. Todos los derechos reservados.
         </p>

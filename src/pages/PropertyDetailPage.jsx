@@ -92,7 +92,7 @@ export default function PropertyDetailPage() {
                   <Star size={14} fill="currentColor" />
                 </div>
               </div>
-              <h1 className="heading-display text-4xl md:text-5xl text-paradise-50 mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
+              <h1 className="heading-display text-4xl md:text-5xl text-paradise-50 mb-4">
                 {property.isMock ? `(X) ${property.title}` : property.title}
               </h1>
               <div className="flex items-center gap-2 text-paradise-400 font-medium">

@@ -61,7 +61,7 @@ export default function WaterVehiclesPage() {
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
           <Anchor size={28} className="text-accent-400" />
-          <h1 className="heading-display text-3xl md:text-4xl text-paradise-50">
+          <h1 className="heading-display text-4xl md:text-5xl text-paradise-50">
             Vehículos Acuáticos
           </h1>
         </div>

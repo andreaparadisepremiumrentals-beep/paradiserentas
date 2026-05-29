@@ -7,7 +7,7 @@ export default function TermsPage() {
   return (
     <div className="p-6 md:p-14 animate-fade-in bg-paradise-950 pb-40">
       <div className="mb-20 max-w-4xl pt-10">
-        <h1 className="heading-display text-5xl md:text-6xl text-paradise-50 mb-6 tracking-tight leading-none uppercase" style={{ fontFamily: "'Playfair Display', serif" }}>
+        <h1 className="heading-display text-5xl md:text-6xl text-paradise-50 mb-6 leading-none uppercase">
           {lang === 'es' ? 'Términos y' : 'Terms &'}{' '}
           <span className="heading-orange">
             {lang === 'es' ? 'Condiciones' : 'Conditions'}

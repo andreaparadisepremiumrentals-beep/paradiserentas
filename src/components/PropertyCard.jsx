@@ -98,7 +98,7 @@ export default function PropertyCard({ property, onDelete, onEdit }) {
 
           {/* Content */}
           <div className="flex flex-col p-6 flex-1">
-            <h3 className={`text-xl font-bold mb-3 line-clamp-1 transition-colors ${isMock ? 'text-paradise-200 opacity-60' : 'text-white font-serif group-hover:text-amber-400'}`} style={{ fontFamily: "'Playfair Display', serif" }}>
+            <h3 className={`text-xl font-bold mb-3 line-clamp-1 transition-colors ${isMock ? 'text-paradise-200 opacity-60' : 'text-white group-hover:text-amber-400'}`}>
               {isMock ? `(MOCK) ${title}` : title}
               {!isMock && <span className="ml-2 inline-flex items-center text-[10px] text-emerald-400 font-black uppercase tracking-widest"><Gem size={12} className="mr-1" /> EXCLUSIVE</span>}
             </h3>

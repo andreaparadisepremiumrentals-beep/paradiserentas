@@ -3,7 +3,7 @@ import { Camera, Video, Plus, Trash2, Home, Building2, Ship, MapPin, DollarSign,
 import { useOutletContext, useNavigate, useSearchParams } from 'react-router-dom';
 import { addProperty, getProperty, updateProperty, isAuthorized } from '../lib/store';
 import PartnerAuthModal from '../components/PartnerAuthModal';
-import StagingModal from '../components/StagingModal';
+
 
 export default function PublishPage() {
   const { lang, t } = useOutletContext();
@@ -30,7 +30,7 @@ export default function PublishPage() {
 
   const [otherAmenity, setOtherAmenity] = useState('');
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const [isStagingModalOpen, setIsStagingModalOpen] = useState(false);
+
 
   // Load property if editing
   useEffect(() => {
@@ -269,14 +269,6 @@ export default function PublishPage() {
               <h3 className="text-xs font-black text-emerald-400 uppercase tracking-widest flex items-center gap-2">
                 <Camera size={16} /> 2. {lang === 'es' ? 'Galería de Imágenes' : 'Image Gallery'}
               </h3>
-              <button
-                type="button"
-                onClick={() => setIsStagingModalOpen(true)}
-                className="flex items-center gap-2 px-4 py-2 bg-accent-500/10 border border-accent-500/20 rounded-xl text-[10px] font-black text-accent-400 hover:bg-accent-500/20 transition-all uppercase tracking-widest shadow-lg shadow-accent-500/5 hover:scale-105 active:scale-95"
-              >
-                <Zap size={14} className="fill-accent-400" />
-                {lang === 'es' ? 'Herramienta Staging' : 'Staging Tool'}
-              </button>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-4">
               {images.map((img, index) => (
@@ -432,7 +424,7 @@ export default function PublishPage() {
           <button 
             onClick={handlePublish}
             disabled={loading}
-            className="w-full bg-emerald-500 hover:bg-emerald-400 text-paradise-950 py-6 rounded-3xl text-sm uppercase tracking-[0.3em] font-black shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:shadow-[0_0_50px_rgba(16,185,129,0.5)] transition-all transform hover:-translate-y-1 active:translate-y-0 disabled:opacity-50 ring-1 ring-emerald-400/50"
+            className="w-full bg-emerald-500 hover:bg-emerald-400 text-paradise-950 py-6 rounded-3xl text-sm uppercase tracking-[0.3em] font-black shadow-md hover:shadow-lg transition-all transform hover:-translate-y-1 active:translate-y-0 disabled:opacity-50 ring-1 ring-emerald-400/50"
           >
             {loading ? (lang === 'es' ? 'Guardando...' : 'Saving...') : (editId ? (lang === 'es' ? 'Guardar Cambios' : 'Save Changes') : (lang === 'es' ? 'Publicar Anuncio' : 'Publish Listing'))}
           </button>
@@ -444,11 +436,7 @@ export default function PublishPage() {
         onConfirm={onConfirmAuth}
         lang={lang}
       />
-      <StagingModal 
-        isOpen={isStagingModalOpen}
-        onClose={() => setIsStagingModalOpen(false)}
-        lang={lang}
-      />
+
     </div>
   );
 }

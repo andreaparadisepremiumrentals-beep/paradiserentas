@@ -13,8 +13,8 @@ const PLACES = [
   { id: 'rioclaro', name: 'Río Claro', img: '/assets/medellin/rioclaro.jpg', lat: 5.9042, lng: -74.8567 },
   { id: 'sabaneta', name: 'Sabaneta', img: '/assets/medellin/sabaneta.jpg', lat: 6.1517, lng: -75.6167 },
   { id: 'parquearvi', name: 'Parque Arví', img: '/assets/medellin/parquearvi.jpg', lat: 6.2833, lng: -75.5000 },
-  { id: 'jardin_botanico', name: 'Jardín Botánico', img: 'https://images.unsplash.com/photo-1596423735880-5fbd841bc6c1?w=800&q=80', lat: 6.2707, lng: -75.5638 },
-  { id: 'pueblito_paisa', name: 'Pueblito Paisa', img: 'https://images.unsplash.com/photo-1627993351989-130ab4e857fe?w=800&q=80', lat: 6.2364, lng: -75.5781 },
+  { id: 'jardin_botanico', name: 'Jardín Botánico', img: '/assets/medellin/jardin_botanico_real.jpg', lat: 6.2707, lng: -75.5638 },
+  { id: 'pueblito_paisa', name: 'Pueblito Paisa', img: '/assets/medellin/pueblito_paisa_real.jpg', lat: 6.2364, lng: -75.5781 },
   { id: 'santafe', name: 'Santa Fe de Antioquia', img: '/assets/medellin/santafe.png', lat: 6.5561, lng: -75.8286 },
   { id: 'envigado', name: 'Envigado', img: '/assets/medellin/envigado.png', lat: 6.1711, lng: -75.5906 },
   { id: 'jardin', name: 'Jardín', img: '/assets/medellin/jardin.png', lat: 5.5986, lng: -75.8194 },
@@ -146,17 +146,16 @@ export default function MedellinGuidePage() {
       });
 
   return (
-    <div className="p-6 md:p-14 animate-fade-in bg-paradise-950 pb-40">
+    <div className="pt-2 md:pt-10 px-6 md:px-14 animate-fade-in bg-paradise-950 pb-40">
       {/* Header */}
-      <div className="mb-20 max-w-4xl">
-        <h1 className="heading-display text-5xl md:text-6xl text-paradise-50 mb-6 tracking-tight leading-none uppercase" style={{ fontFamily: "'Playfair Display', serif" }}>
+      <div className="text-center mb-16">
+        <h1 className="heading-display text-4xl md:text-5xl lg:text-6xl text-paradise-50 mb-6">
           {lang === 'es' ? 'Guía de' : 'Guide to'}{' '}
           <span className="heading-orange" style={{ WebkitTextFillColor: 'unset' }}>
             <span className="heading-orange">Medellín</span>
           </span>
         </h1>
-        <div className="h-0.5 w-24 bg-gradient-to-r from-orange-500 to-gold-400 mb-8" />
-        <p className="text-paradise-400 text-lg md:text-xl font-light leading-relaxed max-w-2xl">
+        <p className="text-paradise-300 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
           {lang === 'es' ? 'Los destinos imperdibles seleccionados por nuestros expertos locales.' : 'Unmissable destinations selected by our local experts.'}
         </p>
       </div>
@@ -258,7 +257,7 @@ export default function MedellinGuidePage() {
                <div className="absolute inset-0 bg-gradient-to-t from-paradise-950 via-paradise-950/20 to-transparent" />
 
                <div className="absolute bottom-12 left-10 right-10">
-                  <h3 className="text-4xl font-extrabold text-white mb-4 tracking-tighter uppercase leading-none" style={{ fontFamily: "'Playfair Display', serif" }}>{place.name}</h3>
+                  <h3 className="text-4xl font-black text-white mb-4 tracking-tighter uppercase leading-none">{place.name}</h3>
                   <p className="text-paradise-300 text-sm leading-relaxed mb-8 opacity-0 group-hover:opacity-100 transition-all duration-700 translate-y-4 group-hover:translate-y-0 max-w-[80%]">
                     {lang === 'es' ? CONTENT[place.id].es : CONTENT[place.id].en}
                   </p>

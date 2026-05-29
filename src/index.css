@@ -57,14 +57,10 @@
     @apply bg-paradise-900/20 backdrop-blur-md border border-white/5 hover:border-accent-500/20 transition-all duration-500;
   }
 
-  /* Premium buttons with orange glow */
+  /* Premium buttons without glow */
   .btn-primary {
-    @apply bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-bold uppercase tracking-[0.15em] rounded-full transition-all active:scale-95 shadow-lg;
+    @apply bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-bold uppercase tracking-[0.15em] rounded-full transition-all active:scale-95 shadow-md;
     font-family: var(--font-sans);
-    box-shadow: 0 6px 30px -6px rgba(16, 185, 129, 0.4);
-  }
-  .btn-primary:hover {
-    box-shadow: 0 8px 40px -4px rgba(16, 185, 129, 0.55);
   }
 
   .btn-primary-outline {
@@ -73,24 +69,29 @@
   }
 
   .btn-elegant {
-    @apply bg-gradient-to-r from-emerald-500 via-emerald-400 to-emerald-300 text-paradise-950 font-bold uppercase tracking-[0.18em] rounded-full transition-all active:scale-95;
+    @apply bg-gradient-to-r from-emerald-500 via-emerald-400 to-emerald-300 text-paradise-950 font-bold uppercase tracking-[0.18em] rounded-full transition-all active:scale-95 shadow-md;
     font-family: var(--font-sans);
-    box-shadow: 0 6px 30px -6px rgba(16, 185, 129, 0.35);
   }
   .btn-elegant:hover {
-    box-shadow: 0 10px 45px -4px rgba(16, 185, 129, 0.5);
     transform: translateY(-1px);
   }
 
-  /* Headings — serif, warm & elegant */
+  /* Emerald specific styles for HomePage buttons */
+  .btn-emerald {
+    @apply bg-emerald-500 hover:bg-emerald-600 text-white font-semibold uppercase tracking-wider transition-colors duration-200 shadow-md;
+  }
+
+  .btn-emerald-outline {
+    @apply border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white font-semibold uppercase tracking-wider transition-all duration-200;
+  }
+
+  /* Headings — bold, modern & impactful (matches hero section) */
   .heading-display {
-    font-family: var(--font-serif);
-    @apply font-extrabold tracking-tight leading-[0.95] text-white;
+    @apply font-sans font-black tracking-tighter leading-[1.05] text-white;
   }
 
   .heading-orange {
-    font-family: var(--font-serif);
-    @apply font-extrabold tracking-tight;
+    @apply font-sans font-black tracking-tighter;
     background: linear-gradient(135deg, #10b981 0%, #059669 40%, #fbbf24 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -102,7 +103,7 @@
   }
 
   .text-emerald-glow {
-    @apply text-accent-400 drop-shadow-[0_0_15px_rgba(16,185,129,0.3)];
+    @apply text-accent-400;
   }
 
   .text-orange-glow {
@@ -117,7 +118,16 @@
   .shadow-orange-glow {
     box-shadow: 0 0 40px -10px rgba(249, 115, 22, 0.25);
   }
+
+  .text-shadow-premium {
+    text-shadow: 0 4px 16px rgba(0, 0, 0, 0.95), 0 2px 4px rgba(0, 0, 0, 0.95);
+  }
+
+  .text-shadow-subtle {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+  }
 }
+
 
 /* Scrollbar Custom */
 ::-webkit-scrollbar {
@@ -151,3 +161,14 @@
 .hero-bg-animate {
   animation: slowZoom 25s ease-in-out infinite alternate;
 }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+

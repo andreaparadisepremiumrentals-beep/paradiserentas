@@ -6,7 +6,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { MessageSquare, X, Send, Sparkles, Loader2, RotateCcw } from 'lucide-react';
 import ChatBubble from './ChatBubble';
-import { geminiModel } from '../lib/gemini';
+import { deepseekModel } from '../lib/deepseek';
 
 // ─── KNOWLEDGE BASE ─────────────────────────────────────
 // Injected context so the AI can respond intelligently
@@ -148,7 +148,7 @@ export default function AICopilotBubble() {
 
     try {
       // If Gemini is not configured, use offline fallback
-      if (!geminiModel) {
+      if (!deepseekModel) {
         const fallback = getOfflineResponse(userMsg.content);
         setMessages(prev => [...prev, { role: 'ai', content: fallback }]);
         return;
@@ -166,7 +166,7 @@ ${historyContext}
 
 Instrucción: Genera la respuesta del Paradise Copilot. Sé útil, conciso y profesional.`;
 
-      const result = await geminiModel.generateContent(prompt);
+      const result = await deepseekModel.generateContent(prompt);
       const response = await result.response;
       const text = response.text();
 
@@ -203,7 +203,7 @@ Instrucción: Genera la respuesta del Paradise Copilot. Sé útil, conciso y pro
     <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end">
       {/* Chat Window */}
       {isOpen && (
-        <div className="mb-4 w-[350px] sm:w-[400px] h-[520px] glass-card rounded-3xl overflow-hidden shadow-2xl flex flex-col animate-fade-in border-accent-500/30">
+        <div className="mb-4 w-[350px] sm:w-[400px] h-[520px] bg-paradise-950/85 backdrop-blur-2xl rounded-3xl overflow-hidden shadow-2xl flex flex-col animate-fade-in border border-accent-500/30">
           {/* Header */}
           <div className="bg-gradient-to-r from-emerald-deep to-paradise-900 p-4 flex items-center justify-between border-b border-accent-500/20">
             <div className="flex items-center gap-2">
@@ -213,7 +213,7 @@ Instrucción: Genera la respuesta del Paradise Copilot. Sé útil, conciso y pro
                 <div>
                   <p className="text-xs font-bold text-paradise-50 uppercase tracking-widest">Paradise Copilot</p>
                   <p className="text-[9px] text-emerald-400 font-bold uppercase">
-                    {geminiModel ? '● Online' : '● Offline Mode'}
+                    {deepseekModel ? '● Online' : '● Offline Mode'}
                   </p>
                 </div>
              </div>
@@ -260,7 +260,7 @@ Instrucción: Genera la respuesta del Paradise Copilot. Sé útil, conciso y pro
           )}
 
           {/* Input */}
-          <div className="p-4 border-t border-paradise-800 bg-paradise-950/50">
+          <div className="p-4 border-t border-white/5 bg-paradise-950/70">
             <div className="relative">
               <input
                 type="text"
@@ -268,7 +268,7 @@ Instrucción: Genera la respuesta del Paradise Copilot. Sé útil, conciso y pro
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                 placeholder="Pregúntame lo que necesites..."
-                className="w-full bg-paradise-900 border border-paradise-700 rounded-2xl pl-4 pr-12 py-3 text-sm focus:border-accent-500 outline-none text-paradise-100 placeholder-paradise-500"
+                className="w-full bg-paradise-900/60 border border-white/10 rounded-2xl pl-4 pr-12 py-3 text-sm focus:border-accent-500 focus:bg-paradise-900/80 outline-none text-paradise-100 placeholder-paradise-500 transition-all"
               />
               <button
                 onClick={handleSend}

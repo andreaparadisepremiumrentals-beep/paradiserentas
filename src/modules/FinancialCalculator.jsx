@@ -106,14 +106,11 @@ export default function CommissionCalculator() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Basic Calculator */}
         <div className="glass-card rounded-[40px] p-8 border-paradise-800/50 shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-6 opacity-10">
-            <Calculator size={80} className="text-white" />
-          </div>
           <h3 className="text-[10px] font-black text-paradise-500 uppercase tracking-widest mb-10">Cálculo Estándar</h3>
           
           <div className="bg-paradise-950/80 rounded-3xl p-8 mb-8 border border-white/5 text-right flex flex-col justify-end min-h-[120px] shadow-inner">
              <div className="text-[10px] text-paradise-500 uppercase tracking-widest font-bold mb-2">Pantalla</div>
-             <div className="text-4xl font-black text-white truncate font-mono tracking-tighter">
+             <div className="text-4xl font-bold text-white truncate font-mono tracking-normal pr-2">
                {display}
              </div>
           </div>
@@ -140,7 +137,7 @@ export default function CommissionCalculator() {
              ))}
              <button 
                onClick={handleEqual}
-               className="col-span-4 h-14 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-2xl text-xl font-black shadow-lg shadow-orange-500/20 flex items-center justify-center"
+               className="col-span-4 h-14 bg-gradient-to-r from-accent-600 to-accent-500 hover:from-accent-500 hover:to-accent-600 text-white rounded-2xl text-xl font-black shadow-md flex items-center justify-center cursor-pointer transition-all hover:scale-[1.01] active:scale-95"
              >
                <Equal size={24} />
              </button>
@@ -188,7 +185,7 @@ export default function CommissionCalculator() {
 
               <button 
                 onClick={calculateCommission}
-                className="w-full py-5 bg-accent-500 text-white rounded-3xl font-black uppercase tracking-widest shadow-xl shadow-accent-500/20 hover:scale-[1.02] active:scale-95 transition-all text-sm"
+                className="w-full py-5 bg-accent-500 text-white rounded-3xl font-black uppercase tracking-widest shadow-md hover:scale-[1.02] active:scale-95 transition-all text-sm"
               >
                 Calcular Comisión
               </button>
@@ -197,7 +194,7 @@ export default function CommissionCalculator() {
 
           {commissionResult !== null && (
             <div className="animate-in slide-in-from-bottom-5 duration-700 glass-card rounded-[40px] p-8 border-emerald-500/20 bg-emerald-500/10 flex flex-col items-center justify-center text-center">
-              <div className="w-16 h-16 bg-emerald-500 rounded-3xl flex items-center justify-center mb-6 shadow-lg shadow-emerald-500/20 transform rotate-6 hover:rotate-0 transition-transform">
+              <div className="w-16 h-16 bg-emerald-500 rounded-3xl flex items-center justify-center mb-6 shadow-md transform rotate-6 hover:rotate-0 transition-transform">
                 <CheckCircle2 className="text-white" size={32} />
               </div>
               <p className="text-[10px] font-black text-emerald-400 uppercase tracking-widest mb-2">Comisión Estimada</p>

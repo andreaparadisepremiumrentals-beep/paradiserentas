@@ -1,12 +1,12 @@
 // --------------------------------------------------------
 // MainLayout — Paradise Premium Rentals — Logo & Orange Accents
 // --------------------------------------------------------
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import {
   Building2, Trees, Ship, HeadphonesIcon,
   Sparkles, Menu, X, Map, Info, Globe, Gem
 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AICopilotBubble from '../components/AICopilotBubble';
 import Footer from '../components/Footer';
 import translations from '../lib/translations';
@@ -14,7 +14,34 @@ import translations from '../lib/translations';
 export default function MainLayout() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [lang, setLang] = useState(localStorage.getItem('lang') || 'es');
+  const [visible, setVisible] = useState(true);
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [isAtTop, setIsAtTop] = useState(true);
+
+  const location = useLocation();
+  const isHome = location.pathname === '/';
   const t = translations[lang];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.scrollY;
+      
+      // Check if at the very top
+      setIsAtTop(currentScrollPos < 10);
+
+      // Smart retractable header logic
+      if (currentScrollPos < 50) {
+        setVisible(true);
+      } else {
+        setVisible(prevScrollPos > currentScrollPos);
+      }
+      
+      setPrevScrollPos(currentScrollPos);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [prevScrollPos]);
 
   const handleLangChange = () => {
     const newLang = lang === 'es' ? 'en' : 'es';
@@ -28,20 +55,23 @@ export default function MainLayout() {
     { to: '/water-vehicles', label: t.nav_vehicles, icon: Ship },
     { to: '/medellin-guide', label: t.nav_medellin, icon: Map },
     { to: '/about', label: t.nav_about, icon: Info },
-    { to: '/ai-center', label: t.nav_ai, icon: Sparkles },
   ];
 
   return (
     <div className="min-h-screen flex flex-col bg-paradise-950 text-paradise-50 font-sans selection:bg-orange-500 selection:text-white overflow-x-hidden">
-      <header className="fixed top-0 left-0 right-0 z-[100] bg-paradise-950/80 backdrop-blur-2xl border-b border-white/5 px-6 md:px-12 py-2 flex items-center justify-between shadow-2xl">
-        <NavLink to="/" className="flex items-center gap-4 group">
+      <header className={`fixed top-0 left-0 right-0 z-[100] px-6 md:px-12 py-3 flex items-center justify-between shadow-2xl transition-all duration-500 ease-in-out ${visible ? 'translate-y-0' : '-translate-y-full'} ${
+        isAtTop
+          ? 'bg-transparent border-b border-transparent shadow-none backdrop-blur-none' 
+          : 'bg-paradise-950/80 backdrop-blur-2xl border-b border-white/5'
+      }`}>
+        {/* Column 1: Brand Logo (Left, aligned) */}
+        <NavLink to="/" className="flex items-center gap-4 group flex-shrink-0">
           {/* Logo with blended background — no white box */}
-          <div className="h-14 md:h-20 flex items-center overflow-hidden">
+          <div className="h-[48px] md:h-[63px] flex items-center overflow-hidden">
              <img 
-               src="/assets/logoparadise.png" 
+               src="/assets/logoparadise.png?v=3" 
                alt="Paradise Premium Rentals"
                className="h-full object-contain transition-all group-hover:scale-105"
-               style={{ mixBlendMode: 'screen', filter: 'brightness(1.1)' }}
                onError={(e) => { 
                  e.target.onerror = null;
                  e.target.style.display = 'none';
@@ -54,60 +84,59 @@ export default function MainLayout() {
           </div>
           {/* Brand name */}
           <div className="hidden md:flex flex-col leading-tight">
-            <span className="font-extrabold text-lg tracking-tight text-white" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <span className="font-extrabold text-base tracking-tight text-white" style={{ fontFamily: "'Playfair Display', serif" }}>
               Paradise Premium
             </span>
-            <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-orange-400/80">
+            <span className="text-[9px] font-bold uppercase tracking-[0.35em] text-orange-400/80">
               Rentals & Sales
             </span>
           </div>
         </NavLink>
 
-        <div className="flex items-center gap-8">
-          <nav className="hidden xl:flex items-center gap-1">
-             {NAV_ITEMS.map((item) => (
-               <NavLink
-                 key={item.to}
-                 to={item.to}
-                 className={({ isActive }) =>
-                   `px-5 py-2.5 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] transition-all duration-300 border border-transparent ${
-                     isActive 
-                      ? 'text-orange-400 bg-orange-500/10 border-orange-500/20' 
-                      : 'text-paradise-200 hover:text-orange-400 hover:bg-white/5'
-                   }`
-                 }
-               >
-                 {item.label}
-               </NavLink>
-             ))}
-          </nav>
-          
-          <div className="flex items-center gap-4 border-l border-white/10 pl-8">
-            <button 
-              onClick={handleLangChange}
-              className="p-3 rounded-full hover:bg-white/5 text-paradise-300 hover:text-emerald-400 transition-all border border-transparent hover:border-white/10"
-            >
-              <Globe size={20} />
-            </button>
+        {/* Column 2: Spacious, centered Navigation Links (No wrapping, well-spaced) */}
+        <nav className="hidden xl:flex items-center gap-1.5 mx-auto px-4">
+           {NAV_ITEMS.map((item) => (
+             <NavLink
+               key={item.to}
+               to={item.to}
+               className={({ isActive }) =>
+                 `px-4 py-2.5 rounded-full text-[11px] font-bold uppercase tracking-[0.18em] transition-all duration-300 border border-transparent whitespace-nowrap ${
+                   isActive 
+                    ? 'text-orange-400 bg-orange-500/10 border-orange-500/20' 
+                    : 'text-paradise-200 hover:text-orange-400 hover:bg-white/5'
+                 }`
+               }
+             >
+               {item.label}
+             </NavLink>
+           ))}
+        </nav>
+        
+        {/* Column 3: Actions & Utilities (Right, flex-shrink-0) */}
+        <div className="flex items-center gap-4 flex-shrink-0">
+          <button 
+            onClick={handleLangChange}
+            className="p-3 rounded-full hover:bg-white/5 text-paradise-300 hover:text-orange-400 transition-all border border-transparent hover:border-white/10"
+          >
+            <Globe size={20} />
+          </button>
 
-            {/* Publish Button — Access is protected by modal within the page */}
-            <NavLink 
-              to="/publish" 
-              className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] transition-all active:scale-95"
-              style={{ boxShadow: '0 4px 25px -4px rgba(16,185,129,0.4)' }}
-            >
-              {t.nav_publish}
-            </NavLink>
-            
-            <button className="xl:hidden p-3 bg-white/10 rounded-full text-white" onClick={() => setMobileOpen(true)}>
-              <Menu size={22} />
-            </button>
-          </div>
+          {/* Publish Button */}
+          <NavLink 
+            to="/publish" 
+            className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-7 py-3 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] transition-all active:scale-95 shadow-md whitespace-nowrap"
+          >
+            {t.nav_publish}
+          </NavLink>
+          
+          <button className="xl:hidden p-3 bg-white/10 rounded-full text-white" onClick={() => setMobileOpen(true)}>
+            <Menu size={22} />
+          </button>
         </div>
       </header>
 
-      {/* Spacer for fixed header */}
-      <div className="h-24 md:h-28" />
+      {/* Spacer for fixed header — only on non-home pages */}
+      {!isHome && <div className="h-20 md:h-24" />}
 
       <main className="flex-1">
         <Outlet context={{ lang, t }} />

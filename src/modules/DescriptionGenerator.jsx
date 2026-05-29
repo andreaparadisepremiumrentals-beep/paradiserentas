@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getModel } from '../lib/gemini';
+import { getModel } from '../lib/deepseek';
 import { Sparkles, Loader2, Copy, Check, Users } from 'lucide-react';
 
 const AMENITIES_OPTIONS = [
@@ -196,7 +196,7 @@ Genera el copy ahora:`;
       <button
         onClick={generateDescription}
         disabled={loading}
-        className="w-full py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-emerald-500/20 disabled:opacity-50 flex items-center justify-center gap-3 active:scale-95 transition-all"
+        className="w-full py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white rounded-2xl font-black uppercase tracking-widest shadow-md disabled:opacity-50 flex items-center justify-center gap-3 active:scale-95 transition-all"
       >
         {loading ? (
           <>
