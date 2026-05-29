@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
+import { createPortal } from 'react-dom';
 
 import { getProperty } from '../lib/store';
 
@@ -27,6 +28,36 @@ export default function PropertyDetailPage() {
     };
     fetchProp();
   }, [id]);
+
+  // Bloquear scroll del body cuando la galería esté abierta
+  useEffect(() => {
+    if (isGalleryOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isGalleryOpen]);
+
+  // Soporte de navegación por teclado (Flechas y Escape)
+  useEffect(() => {
+    if (!isGalleryOpen || !property || !property.images) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowLeft') {
+        setActiveImage((prev) => (prev === 0 ? property.images.length - 1 : prev - 1));
+      } else if (e.key === 'ArrowRight') {
+        setActiveImage((prev) => (prev === property.images.length - 1 ? 0 : prev + 1));
+      } else if (e.key === 'Escape') {
+        setIsGalleryOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isGalleryOpen, property]);
 
   if (!property) {
     return (
@@ -236,55 +267,78 @@ export default function PropertyDetailPage() {
           </div>
         </div>
       </div>
+
       {/* Full Gallery Modal / Carousel */}
-      {isGalleryOpen && (
-        <div className="fixed inset-0 z-[200] bg-paradise-950 flex flex-col animate-fade-in">
-           <div className="p-6 flex items-center justify-between border-b border-white/5">
+      {isGalleryOpen && createPortal(
+        <div className="fixed inset-0 z-[9999] bg-black/96 flex flex-col justify-between select-none animate-fade-in backdrop-blur-md">
+           {/* Ambient Glow Background - projected blur of the active image */}
+           <div 
+             className="absolute inset-0 z-0 bg-cover bg-center filter blur-[120px] opacity-30 scale-90 transition-all duration-[1000ms]"
+             style={{ backgroundImage: `url(${property.images?.[activeImage]})` }}
+           />
+
+           {/* Floating glassmorphic top bar */}
+           <div className="relative z-10 p-6 flex items-center justify-between border-b border-white/5 bg-black/30 backdrop-blur-md">
               <button 
                 onClick={() => setIsGalleryOpen(false)}
-                className="flex items-center gap-3 text-paradise-400 hover:text-emerald-400 transition-colors group"
+                className="flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white/80 hover:text-white transition-all active:scale-95 text-xs font-bold uppercase tracking-widest cursor-pointer"
               >
-                <ChevronLeft size={24} className="group-hover:-translate-x-1 transition-transform" />
-                <span className="text-paradise-50 font-bold uppercase tracking-widest text-sm">Volver al Detalle</span>
+                <ChevronLeft size={16} />
+                <span>Volver al Detalle</span>
               </button>
+              
+              {/* Central counter */}
+              <div className="hidden sm:block px-5 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 font-semibold text-xs uppercase tracking-widest">
+                Imagen {String(activeImage + 1).padStart(2, '0')} de {String(property.images?.length || 0).padStart(2, '0')}
+              </div>
+
               <button 
                 onClick={() => setIsGalleryOpen(false)}
-                className="p-3 bg-white/5 rounded-full text-paradise-400 hover:text-white"
+                className="p-3 bg-white/5 hover:bg-red-500/20 border border-white/10 hover:border-red-500/30 rounded-full text-white/80 hover:text-white transition-all active:scale-95 flex items-center justify-center cursor-pointer"
               >
-                <X size={24} />
+                <X size={20} />
               </button>
            </div>
            
-           <div className="flex-1 relative flex items-center justify-center p-4">
-              <img 
-                src={property.images?.[activeImage]} 
-                alt="Fullscreen"
-                className="max-w-full max-h-full object-contain rounded-2xl shadow-2xl"
-              />
+           {/* Main Viewer Area */}
+           <div className="flex-1 relative flex items-center justify-center p-4 md:p-12 z-10">
+              <div className="relative z-10 max-w-5xl max-h-[68vh] md:max-h-[72vh] flex items-center justify-center overflow-hidden rounded-[28px] shadow-3xl border border-white/10 bg-black/40">
+                 <img 
+                   key={activeImage} // Force fresh mount animation when active image changes!
+                   src={property.images?.[activeImage]} 
+                   alt="View fullscreen"
+                   className="max-w-full max-h-[68vh] md:max-h-[72vh] object-contain transition-all duration-700 animate-fade-in"
+                 />
+              </div>
               
+              {/* Previous Button */}
               <button 
                 onClick={() => setActiveImage((prev) => (prev === 0 ? property.images.length - 1 : prev - 1))}
-                className="absolute left-6 md:left-12 p-5 bg-black/40 backdrop-blur-md rounded-full text-white hover:bg-emerald-500 transition-all shadow-2xl"
+                className="absolute left-6 md:left-12 p-4 bg-black/40 hover:bg-emerald-500 border border-white/10 hover:border-emerald-400 backdrop-blur-md rounded-full text-white hover:text-paradise-950 transition-all duration-300 shadow-2xl hover:scale-110 active:scale-95 flex items-center justify-center"
               >
-                <ChevronLeft size={32} />
+                <ChevronLeft size={28} />
               </button>
               
+              {/* Next Button */}
               <button 
                 onClick={() => setActiveImage((prev) => (prev === property.images.length - 1 ? 0 : prev + 1))}
-                className="absolute right-6 md:right-12 p-5 bg-black/40 backdrop-blur-md rounded-full text-white hover:bg-emerald-500 transition-all shadow-2xl"
+                className="absolute right-6 md:right-12 p-4 bg-black/40 hover:bg-emerald-500 border border-white/10 hover:border-emerald-400 backdrop-blur-md rounded-full text-white hover:text-paradise-950 transition-all duration-300 shadow-2xl hover:scale-110 active:scale-95 flex items-center justify-center"
               >
-                <ChevronRight size={32} />
+                <ChevronRight size={28} />
               </button>
            </div>
 
-           <div className="p-6 bg-paradise-950/50 border-t border-white/5 overflow-x-auto">
-              <div className="flex gap-4 min-w-max mx-auto justify-center">
+           {/* Bottom thumbnail selector */}
+           <div className="relative z-10 p-6 bg-black/30 border-t border-white/5 backdrop-blur-md">
+              <div className="flex gap-3 justify-center overflow-x-auto py-1 no-scrollbar max-w-4xl mx-auto">
                  {property.images.map((img, idx) => (
                    <button 
                      key={idx}
                      onClick={() => setActiveImage(idx)}
-                     className={`w-20 h-20 rounded-xl overflow-hidden border-2 transition-all ${
-                       activeImage === idx ? 'border-emerald-500 scale-105 shadow-emerald-500/20 shadow-xl' : 'border-transparent opacity-50 grayscale'
+                     className={`relative w-20 h-14 rounded-xl overflow-hidden border-2 transition-all duration-300 flex-shrink-0 cursor-pointer ${
+                       activeImage === idx 
+                         ? 'border-emerald-500 scale-105 shadow-lg shadow-emerald-500/30 opacity-100' 
+                         : 'border-white/15 opacity-40 hover:opacity-75'
                      }`}
                    >
                      <img src={img} className="w-full h-full object-cover" />
@@ -292,7 +346,8 @@ export default function PropertyDetailPage() {
                  ))}
               </div>
            </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

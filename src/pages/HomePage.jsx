@@ -22,7 +22,7 @@ export default function HomePage() {
   const [recentProperties, setRecentProperties] = useState([]);
 
   useEffect(() => {
-    getProperties().then(props => setRecentProperties(props.slice(0, 4)));
+    getProperties().then(props => setRecentProperties(props.slice(0, 6)));
   }, []);
 
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -45,7 +45,7 @@ export default function HomePage() {
       try {
         await removeProperty(pendingDeleteId, rawEmail);
         const props = await getProperties();
-        setRecentProperties(props.slice(0, 4));
+        setRecentProperties(props.slice(0, 6));
         addToast(lang === 'es' ? 'Propiedad eliminada.' : 'Property deleted.');
       } catch (err) {
         addToast(err.message, 'error');
