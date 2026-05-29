@@ -1,0 +1,38 @@
+{
+  "PLACES": [
+    { "id": "provenza", "name": "Provenza", "img": "/assets/medellin/provenza.jpg", "lat": 6.2088, "lng": -75.5679 },
+    { "id": "la70", "name": "La 70", "img": "/assets/medellin/la70.jpg", "lat": 6.2486, "lng": -75.5936 },
+    { "id": "comuna13", "name": "Comuna 13", "img": "/assets/medellin/comuna13.jpg", "lat": 6.2462, "lng": -75.6128 },
+    { "id": "guatape", "name": "Guatapé", "img": "/assets/medellin/guatape.jpg", "lat": 6.2325, "lng": -75.1575 },
+    { "id": "rioclaro", "name": "Río Claro", "img": "/assets/medellin/rioclaro.jpg", "lat": 5.9042, "lng": -74.8567 },
+    { "id": "sabaneta", "name": "Sabaneta", "img": "/assets/medellin/sabaneta.jpg", "lat": 6.1517, "lng": -75.6167 },
+    { "id": "parquearvi", "name": "Parque Arví", "img": "/assets/medellin/parquearvi.jpg", "lat": 6.2833, "lng": -75.5000 },
+    { "id": "jardin_botanico", "name": "Jardín Botánico", "img": "/assets/medellin/jardin_botanico_real.jpg", "lat": 6.2707, "lng": -75.5638 },
+    { "id": "pueblito_paisa", "name": "Pueblito Paisa", "img": "/assets/medellin/pueblito_paisa_real.jpg", "lat": 6.2364, "lng": -75.5781 },
+    { "id": "santafe", "name": "Santa Fe de Antioquia", "img": "/assets/medellin/santafe.png", "lat": 6.5561, "lng": -75.8286 },
+    { "id": "envigado", "name": "Envigado", "img": "/assets/medellin/envigado.png", "lat": 6.1711, "lng": -75.5906 },
+    { "id": "jardin", "name": "Jardín", "img": "/assets/medellin/jardin.png", "lat": 5.5986, "lng": -75.8194 }
+  ],
+  "CONTENT": {
+    "provenza": { "es": "La calle más cool del mundo. Un oasis de vegetación y lujo gourmet.", "en": "The coolest street in the world. An oasis of luxury greenery and gourmet dining.", "tag": "Trending" },
+    "la70": { "es": "El corazón de la fiesta paisa. Auténtica rumba de Medellín.", "en": "The heart of the paisa party. Authentic Medellin nightlife.", "tag": "Fiesta" },
+    "comuna13": { "es": "Historias de resiliencia y arte urbano espectacular.", "en": "Stories of resilience and spectacular urban art.", "tag": "Cultura" },
+    "guatape": { "es": "La mejor vista del mundo desde el Peñol.", "en": "The best view in the world from the Rock.", "tag": "Paisaje" },
+    "rioclaro": { "es": "Aventura en un cañón de mármol y aguas cristalinas.", "en": "Adventure in a marble canyon and crystal clear waters.", "tag": "Aventura" },
+    "sabaneta": { "es": "El municipio más pequeño de Colombia con la mejor vida nocturna.", "en": "Colombia's smallest municipality with the best nightlife.", "tag": "Local" },
+    "parquearvi": { "es": "Naturaleza y aventura a minutos del centro por metrocable.", "en": "Nature and adventure just minutes from downtown by cable car.", "tag": "Naturaleza" },
+    "jardin_botanico": { "es": "Un oasis natural de conservación vegetal en medio de la ciudad.", "en": "A natural oasis of plant conservation in the middle of the city.", "tag": "Jardines" },
+    "pueblito_paisa": { "es": "Una réplica pintoresca de un pueblo tradicional antioqueño en la cima del Cerro Nutibara.", "en": "A picturesque replica of a traditional Antioquian town atop Cerro Nutibara.", "tag": "Historia" },
+    "santafe": { "es": "Pueblo colonial patrimonio con clima cálido, puente de occidente y arquitectura histórica.", "en": "Colonial heritage town with warm climate, the Bridge of the West, and historic architecture.", "tag": "Colonial" },
+    "envigado": { "es": "Municipio residencial tranquilo con excelentes cafés, parques y cercanía a El Poblado.", "en": "Quiet residential municipality with excellent cafes, parks, and proximity to El Poblado.", "tag": "Residencial" },
+    "jardin": { "es": "Pueblo patrimonio rodeado de montañas verdes, café y avistamiento de aves de talla mundial.", "en": "Heritage town surrounded by green mountains, coffee farms, and world-class birdwatching.", "tag": "Patrimonio" }
+  },
+  "HIDDEN_GEMS": [
+    { "name": "Pergamino Cafe", "type": "Café de Especialidad", "desc": "El epicentro de la cultura del café en El Poblado.", "img": "/assets/pergamino_cafe.png" },
+    { "name": "El Social", "type": "Bar Tradicional", "desc": "Una esquina mítica donde la tradición paisa se encuentra con la modernidad.", "img": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=800&q=80" },
+    { "name": "Oci.Mde", "type": "Gastronomía Autor", "desc": "Cocina lenta y sabores profundos en un ambiente industrial sofisticado.", "img": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80" },
+    { "name": "Carmen", "type": "Alta Cocina", "desc": "Fusión colombiana con técnicas internacionales. Uno de los mejores restaurantes de la ciudad.", "img": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80" },
+    { "name": "Alambique", "type": "Coctelería Artesanal", "desc": "Cocteles de autor con ingredientes locales en un ambiente íntimo y sofisticado.", "img": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=800&q=80" },
+    { "name": "Mercado del Río", "type": "Food Hall", "desc": "El mercado gastronómico más grande de Medellín. Más de 40 puestos con cocina del mundo.", "img": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80" }
+  ]
+}

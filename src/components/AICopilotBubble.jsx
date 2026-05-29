@@ -9,81 +9,9 @@ import ChatBubble from './ChatBubble';
 import { deepseekModel } from '../lib/deepseek';
 
 // ─── KNOWLEDGE BASE ─────────────────────────────────────
-// Injected context so the AI can respond intelligently
-// even without full property data.
-const KNOWLEDGE_BASE = `
-## PARADISE PREMIUM — BASE DE CONOCIMIENTO INTERNA
+import kbData from '../data/knowledgeBase.json';
 
-### SOBRE NOSOTROS
-Paradise Premium Rentals & Sales es una empresa inmobiliaria de Medellín, Colombia,
-enfocada en arriendos amoblados y venta de propiedades premium.
-Socios fundadores: Andrea y Gustavo.
-Contacto directo vía WhatsApp: +57 300 XXX XXXX (preguntar al cliente si desea el número).
-Sitio web: paradisepremium.co
-
-### CATEGORÍAS DE PROPIEDADES
-1. **Apartamentos & Casas** — Residencias amobladas en El Poblado, Laureles, Envigado, Sabaneta.
-2. **Fincas** — Retiros campestres en El Retiro, Santa Fe de Antioquia, Guatapé, San Jerónimo.
-3. **Vehículos Acuáticos** — Yates y lanchas en Guatapé y la represa.
-
-### ZONAS POPULARES EN MEDELLÍN
-- **El Poblado / Provenza**: Zona premium con restaurantes, bares, vida nocturna. La calle más cool del mundo según Time Out.
-- **Laureles / La 70**: Barrio tradicional, más local, excelente gastronomía, zona de rumba auténtica paisa.
-- **Envigado**: Municipio tranquilo, residencial, en crecimiento. Precios más accesibles que El Poblado.
-- **Sabaneta**: El municipio más pequeño de Colombia, vida nocturna activa, zona sur del Valle de Aburrá.
-- **Comuna 13**: Atracción turística principal, arte urbano, escaleras eléctricas, historia de resiliencia.
-
-### LUGARES TURÍSTICOS CERCA DE MEDELLÍN
-- **Guatapé** (2h): La Piedra del Peñol, embalse, deportes acuáticos, pueblo colorido.
-- **Río Claro** (3h): Cañón de mármol, aguas cristalinas, canopy, naturaleza pura.
-- **Santa Fe de Antioquia** (1.5h): Pueblo colonial, puente de occidente, clima cálido.
-- **Parque Arví**: Reserva natural accesible por metrocable desde Santo Domingo.
-- **Jardín Botánico**: Oasis verde en medio de la ciudad, espacio de conservación.
-- **Pueblito Paisa**: Réplica de un pueblo tradicional antioqueño en el Cerro Nutibara.
-- **Jardín** (3h): Pueblo patrimonio rodeado de naturaleza, avistamiento de aves.
-
-### RESTAURANTES Y CAFÉS RECOMENDADOS (EL POBLADO)
-- **Pergamino Cafe**: El epicentro del café de especialidad en Medellín.
-- **El Social**: Bar tradicional en Provenza, coctelería artesanal.
-- **Oci.Mde**: Cocina lenta, sabores profundos, ambiente industrial sofisticado.
-- **Carmen**: Restaurante de alta cocina fusión colombiana.
-- **Alambique**: Coctelería de autor en El Poblado.
-
-### PRECIOS REFERENCIA (MENSUAL, COP)
-- Apartamento amoblado El Poblado: $4,000,000 - $15,000,000/mes
-- Finca fin de semana (El Retiro): $800,000 - $3,000,000/noche
-- Yate en Guatapé: $2,500,000 - $5,000,000/día
-- Nota: Los precios varían. Siempre referir al catálogo o a los socios para cotización exacta.
-
-### SERVICIOS INCLUIDOS
-- Gestión integral de la propiedad
-- Servicio de limpieza y mantenimiento
-- Asesoría legal inmobiliaria
-- Virtual staging con IA
-- Generación de descripciones con IA
-- Calculadora financiera
-
-### PREGUNTAS FRECUENTES
-- **¿Cómo reservar?** Contactar a Andrea o Gustavo vía WhatsApp o email.
-- **¿Tienen contrato?** Sí, todos los arriendos incluyen contrato formal y acta de inventario según Ley 820 de 2003.
-- **¿Aceptan mascotas?** Varía por propiedad, se indica en cada anuncio.
-- **¿Aceptan pagos internacionales?** Sí, transferencia bancaria y facilidades de pago para extranjeros.
-`;
-
-// ─── FALLBACK RESPONSES ─────────────────────────────────
-// Intelligent offline answers when Gemini is unavailable
-const FALLBACK_RESPONSES = {
-  greeting: [
-    '¡Hola! Bienvenido a Paradise Premium. ¿Buscas un apartamento amoblado, una finca para el fin de semana, o información sobre Medellín?',
-    '¡Bienvenido! Soy el asistente de Paradise Premium. Puedo ayudarte con propiedades en El Poblado, Laureles, Envigado y más. ¿Qué necesitas?'
-  ],
-  apartments: 'Tenemos apartamentos amoblados desde $4,000,000 COP/mes en zonas como El Poblado, Laureles y Envigado. ¿Te gustaría ver nuestro catálogo? Puedes navegar a la sección "Apartamentos & Casas" en el menú.',
-  fincas: 'Nuestras fincas están ubicadas en El Retiro, Santa Fe de Antioquia, Guatapé y San Jerónimo. Ideales para fines de semana y eventos. ¿Quieres más detalles?',
-  vehicles: 'Ofrecemos yates y lanchas en la represa de Guatapé con capitán incluido, sistema de sonido y equipo para deportes acuáticos. Contacta a nuestros socios para disponibilidad.',
-  contact: 'Para reservas y cotizaciones, contacta directamente a nuestros socios fundadores Andrea o Gustavo. Puedes escribirles por WhatsApp o ir a la sección de Soporte.',
-  medellin: 'Medellín es la ciudad de la eterna primavera. Te recomiendo visitar Provenza, Comuna 13, Guatapé y el Parque Arví. En nuestra Guía Medellín tienes toda la info.',
-  default: 'Gracias por tu consulta. Para darte la mejor asistencia, te recomiendo contactar directamente a nuestros socios Andrea o Gustavo, o navegar nuestro catálogo completo en las secciones del menú.'
-};
+const { KNOWLEDGE_BASE, FALLBACK_RESPONSES } = kbData;
 
 function getOfflineResponse(userMessage) {
   const msg = userMessage.toLowerCase();

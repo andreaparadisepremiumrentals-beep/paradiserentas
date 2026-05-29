@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Camera, Video, Plus, Trash2, Home, Building2, Ship, MapPin, DollarSign, Waves, ListChecks, Pencil, Star, ImagePlus, Zap } from 'lucide-react';
+import { Camera, Video, Plus, Trash2, Home, Building2, Ship, MapPin, DollarSign, ListChecks, Pencil, Star, ImagePlus } from 'lucide-react';
 import { useOutletContext, useNavigate, useSearchParams } from 'react-router-dom';
 import { addProperty, getProperty, updateProperty, isAuthorized } from '../lib/store';
+import { supabase } from '../lib/supabase';
 import PartnerAuthModal from '../components/PartnerAuthModal';
 
 
@@ -114,12 +115,36 @@ export default function PublishPage() {
     const files = Array.from(e.target.files);
     setLoading(true);
     try {
-      const newImages = await Promise.all(
-        files.map(file => compressImage(file))
-      );
-      setImages(prev => [...prev, ...newImages]);
+      const uploadedUrls = [];
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const compressedBase64 = await compressImage(file);
+        const res = await fetch(compressedBase64);
+        const blob = await res.blob();
+        
+        const fileName = `properties/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+        const { data: presignData, error: presignError } = await supabase.functions.invoke('r2-presign', {
+          body: { filename: fileName, contentType: 'image/jpeg' }
+        });
+        
+        if (presignError) throw presignError;
+        if (!presignData || !presignData.uploadUrl) {
+          throw new Error('Failed to get presigned URL');
+        }
+        
+        const uploadRes = await fetch(presignData.uploadUrl, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'image/jpeg' },
+          body: blob
+        });
+        
+        if (!uploadRes.ok) throw new Error('R2 upload failed');
+        uploadedUrls.push(presignData.publicUrl);
+      }
+      setImages(prev => [...prev, ...uploadedUrls]);
     } catch (err) {
-      console.error('Resize error:', err);
+      console.error('Upload error:', err);
+      alert('Error al subir imágenes: ' + err.message);
     } finally {
       setLoading(false);
     }

@@ -102,12 +102,7 @@ const storage = {
     res(data ? JSON.parse(data) : []);
   }),
   set: (data) => new Promise(res => {
-    // Lightening images to prevent QuotaExceededError
-    const lightData = data.map(p => ({
-      ...p,
-      images: (p.images && p.images.length > 0) ? [p.images[0]] : []
-    }));
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(lightData));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     res();
   })
 };

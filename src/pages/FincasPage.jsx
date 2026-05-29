@@ -2,16 +2,19 @@
 // FincasPage — Country estates & recreational properties
 // --------------------------------------------------------
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import { getProperties, removeProperty } from '../lib/store';
 import PropertyCard from '../components/PropertyCard';
 import { Search, Mountain } from 'lucide-react';
+import PartnerAuthModal from '../components/PartnerAuthModal';
 
 export default function FincasPage() {
   const navigate = useNavigate();
+  const { lang = 'es' } = useOutletContext() || {};
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [authModal, setAuthModal] = useState({ isOpen: false, propertyId: null });
 
   useEffect(() => {
     fetchFincas();
@@ -30,19 +33,19 @@ export default function FincasPage() {
     }
   }
 
-  const handleDelete = async (id) => {
-    const email = prompt('Autorización: Ingrese "andrea", "marlon" o "gustavo" para confirmar la eliminación:');
-    if (!email) return;
+  const handleDeleteClick = (id) => {
+    setAuthModal({ isOpen: true, propertyId: id });
+  };
 
-    if (!confirm('¿Seguro que quieres borrar esta propiedad permanentemente?')) return;
-
+  const handleConfirmDelete = async (email) => {
+    setAuthModal({ isOpen: false, propertyId: null });
     try {
-      await removeProperty(id, email);
-      alert('Propiedad eliminada correctamente.');
+      await removeProperty(authModal.propertyId, email);
+      alert(lang === 'es' ? 'Propiedad eliminada correctamente.' : 'Property successfully deleted.');
       fetchFincas();
     } catch (e) {
       console.error(e);
-      alert(`Error al eliminar: ${e.message}`);
+      alert(`Error: ${e.message}`);
     }
   };
 
@@ -90,7 +93,7 @@ export default function FincasPage() {
             <PropertyCard 
               key={p.id} 
               property={p} 
-              onDelete={handleDelete} 
+              onDelete={handleDeleteClick} 
               onEdit={handleEdit} 
             />
           ))}
@@ -101,6 +104,13 @@ export default function FincasPage() {
           )}
         </div>
       )}
+
+      <PartnerAuthModal 
+        isOpen={authModal.isOpen} 
+        onClose={() => setAuthModal({ isOpen: false, propertyId: null })} 
+        onConfirm={handleConfirmDelete} 
+        lang={lang} 
+      />
     </div>
   );
 }

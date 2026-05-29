@@ -39,8 +39,8 @@ export default function AboutPage() {
         </div>
         <div className="glass-card rounded-2xl overflow-hidden aspect-video relative group">
           <img 
-            src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80" 
-            alt="Paradise View" 
+            src="/assets/luxury_penthouse.png" 
+            alt="Luxury Penthouse View" 
             className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-paradise-950/80 to-transparent flex items-end p-8">
