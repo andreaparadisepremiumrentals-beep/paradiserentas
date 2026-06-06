@@ -171,17 +171,6 @@ export default function PublishPage() {
 
   const AUTHORIZED_EMAILS = ['marlon', 'andrea', 'gustavo'];
 
-  const manageQuota = () => {
-    try {
-      const all = JSON.parse(localStorage.getItem('paradise_properties_v5') || '[]');
-      if (all.length > 60) {
-        localStorage.setItem('paradise_properties_v5', JSON.stringify(all.slice(0, 60)));
-      }
-    } catch (e) {
-      localStorage.clear();
-    }
-  };
-
   const toggleAmenity = (am) => {
     setFormData(prev => {
       const isIncluded = prev.amenities.includes(am);
@@ -236,7 +225,6 @@ export default function PublishPage() {
         alert(lang === 'es' ? '¡Propiedad actualizada con éxito!' : 'Property updated successfully!');
         navigate(`/property/${editId}`);
       } else {
-        manageQuota();
         const created = await addProperty(propData, rawEmail);
         alert(lang === 'es' ? '¡Propiedad publicada con éxito!' : 'Property published successfully!');
         navigate(`/property/${created.id}`);

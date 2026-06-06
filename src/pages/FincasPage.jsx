@@ -23,8 +23,7 @@ export default function FincasPage() {
   async function fetchFincas() {
     setLoading(true);
     try {
-      const all = await getProperties();
-      const data = all.filter(p => p.category === 'finca');
+      const data = await getProperties('finca');
       setProperties(data);
     } catch {
       setProperties([]);

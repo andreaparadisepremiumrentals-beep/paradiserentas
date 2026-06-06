@@ -92,43 +92,52 @@ const INITIAL_PROPERTIES = [
   }
 ];
 
-const STORAGE_KEY = 'paradise_properties_v6';
-const SYNC_KEY = 'paradise_last_sync_v6';
+// ---------------------------------------------------------------------------
+// In-memory cache — avoids localStorage quota errors caused by large image
+// URL arrays. Data lives only for the current browser session (page refresh
+// clears it), which is fine because Supabase is the source of truth.
+// ---------------------------------------------------------------------------
+const _cache = new Map(); // key: category|'all'  → { data, ts }
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
-// Asynchronous LocalStorage Helpers
-const storage = {
-  get: () => new Promise(res => {
-    const data = localStorage.getItem(STORAGE_KEY);
-    res(data ? JSON.parse(data) : []);
-  }),
-  set: (data) => new Promise(res => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    res();
-  })
-};
+function cacheGet(key) {
+  const entry = _cache.get(key);
+  if (!entry) return null;
+  if (Date.now() - entry.ts > CACHE_TTL) { _cache.delete(key); return null; }
+  return entry.data;
+}
+function cacheSet(key, data) {
+  _cache.set(key, { data, ts: Date.now() });
+}
+function cacheInvalidate() {
+  _cache.clear();
+}
 
-export const getProperties = async () => {
-  const cached = await storage.get();
-  const lastSync = parseInt(localStorage.getItem(SYNC_KEY) || '0', 10);
-  const CACHE_TTL = 1 * 60 * 1000; // 1 minute for now to ensure freshness
+/**
+ * Fetch properties from Supabase (or in-memory cache).
+ * @param {string|null} category  Optional: 'finca' | 'apartment' | 'vehicle'
+ */
+export const getProperties = async (category = null) => {
+  const cacheKey = category || 'all';
+  const cached = cacheGet(cacheKey);
+  if (cached) return cached;
 
-  const shouldFetch = cached.length === 0 || (Date.now() - lastSync > CACHE_TTL);
+  try {
+    let query = supabase.from('properties').select('*').order('created_at', { ascending: false });
+    if (category) query = query.eq('category', category);
 
-  if (shouldFetch) {
-    try {
-      const { data, error } = await supabase.from('properties').select('*').order('created_at', { ascending: false });
+    const { data, error } = await query;
 
-      if (!error && data && data.length > 0) {
-        await storage.set(data);
-        localStorage.setItem(SYNC_KEY, Date.now().toString());
-        return data;
-      }
-    } catch (err) {
-      console.error('Supabase Fetch exception:', err);
+    if (!error && data && data.length > 0) {
+      cacheSet(cacheKey, data);
+      return data;
     }
+  } catch (err) {
+    console.error('Supabase Fetch exception:', err);
   }
 
-  return cached.length > 0 ? cached : INITIAL_PROPERTIES;
+  // Fallback: mock data (only shown before any real data exists)
+  return INITIAL_PROPERTIES.filter(p => !category || p.category === category);
 };
 
 export const getProperty = async (id) => {
@@ -160,10 +169,8 @@ export const addProperty = async (prop) => {
     const propToInsert = { ...prop, created_at: new Date().toISOString() };
     const { data, error } = await supabase.from('properties').insert([propToInsert]).select();
     if (error) throw new Error(error.message);
-    const newData = data[0];
-    const all = await storage.get();
-    await storage.set([newData, ...all]);
-    return newData;
+    cacheInvalidate(); // bust cache so next fetch gets fresh data
+    return data[0];
   } catch (e) {
     throw new Error(e.message);
   }
@@ -181,10 +188,8 @@ export const removeProperty = async (id, email) => {
       const { error } = await supabase.from('properties').delete().eq('id', id);
       if (error) throw error;
     }
-    const all = await storage.get();
-    const updated = all.filter(p => String(p.id) !== String(id));
-    await storage.set(updated);
-    return updated;
+    cacheInvalidate(); // bust cache
+    return true;
   } catch (e) {
     throw e;
   }
@@ -192,26 +197,15 @@ export const removeProperty = async (id, email) => {
 
 export const updateProperty = async (id, updates) => {
   try {
-    let updatedProperty = null;
     if (isUuid(id)) {
       const { data, error } = await supabase.from('properties').update(updates).eq('id', id).select();
       if (error) throw error;
-      updatedProperty = data && data[0];
+      cacheInvalidate(); // bust cache so edited data appears on next visit
+      return data && data[0];
     }
-    const all = await storage.get();
-    const idx = all.findIndex(p => String(p.id) === String(id));
-    if (idx !== -1) {
-      all[idx] = updatedProperty || { ...all[idx], ...updates };
-      await storage.set(all);
-    } else if (!isUuid(id)) {
-      const mockIdx = INITIAL_PROPERTIES.findIndex(p => String(p.id) === String(id));
-      if (mockIdx !== -1) {
-        const updatedMock = { ...INITIAL_PROPERTIES[mockIdx], ...updates };
-        const mergedList = INITIAL_PROPERTIES.map(p => String(p.id) === String(id) ? updatedMock : p);
-        await storage.set(mergedList);
-      }
-    }
-    return all;
+    // For non-UUID (mock) IDs there is nothing to persist server-side
+    cacheInvalidate();
+    return null;
   } catch (e) {
     throw e;
   }
