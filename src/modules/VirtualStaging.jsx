@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { supabase } from '../lib/supabase';
+import { uploadToR2 } from '../lib/r2Upload';
 import { Upload, ImagePlus, Loader2, CheckCircle2, AlertCircle, Palette, Sparkles } from 'lucide-react';
 import { getModel } from '../lib/gemini';
 
@@ -75,31 +75,8 @@ export default function VirtualStaging() {
         try {
           const fileName = `staging/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
           
-          // 1. Obtener la URL firmada para Cloudflare R2 desde nuestra Edge Function
-          const { data: presignData, error: presignError } = await supabase.functions.invoke('r2-presign', {
-            body: { filename: fileName, contentType: file.type }
-          });
-          
-          if (presignError) throw presignError;
-          if (!presignData || !presignData.uploadUrl) {
-            throw new Error('No se pudo obtener la URL firmada para Cloudflare R2.');
-          }
-          
-          // 2. Subir el archivo binario directamente a Cloudflare R2 por PUT
-          const uploadRes = await fetch(presignData.uploadUrl, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': file.type
-            },
-            body: file
-          });
-          
-          if (!uploadRes.ok) {
-            throw new Error(`Error en la subida directa a R2: ${uploadRes.statusText}`);
-          }
-          
-          // 3. Asignar la URL pública construida por R2
-          publicUrl = presignData.publicUrl;
+          // Upload directly to Cloudflare R2
+          publicUrl = await uploadToR2(file, fileName, file.type);
         } catch (storageErr) {
           console.warn('Subida a Cloudflare R2 fallida, utilizando fallback local:', storageErr);
           publicUrl = URL.createObjectURL(file);

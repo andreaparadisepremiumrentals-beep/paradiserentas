@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Camera, Video, Plus, Trash2, Home, Building2, Ship, MapPin, DollarSign, ListChecks, Pencil, Star, ImagePlus } from 'lucide-react';
 import { useOutletContext, useNavigate, useSearchParams } from 'react-router-dom';
 import { addProperty, getProperty, updateProperty, isAuthorized } from '../lib/store';
-import { supabase } from '../lib/supabase';
+import { uploadToR2 } from '../lib/r2Upload';
 import PartnerAuthModal from '../components/PartnerAuthModal';
 
 
@@ -113,38 +113,29 @@ export default function PublishPage() {
 
   const handleImageUpload = async (e) => {
     const files = Array.from(e.target.files);
+    if (files.length === 0) return;
     setLoading(true);
     try {
       const uploadedUrls = [];
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
+        // Compress the image
         const compressedBase64 = await compressImage(file);
         const res = await fetch(compressedBase64);
         const blob = await res.blob();
         
-        const fileName = `properties/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
-        const { data: presignData, error: presignError } = await supabase.functions.invoke('r2-presign', {
-          body: { filename: fileName, contentType: 'image/jpeg' }
-        });
+        // Generate a unique filename
+        const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+        const fileName = `properties/${Date.now()}-${i}-${safeName}`;
         
-        if (presignError) throw presignError;
-        if (!presignData || !presignData.uploadUrl) {
-          throw new Error('Failed to get presigned URL');
-        }
-        
-        const uploadRes = await fetch(presignData.uploadUrl, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'image/jpeg' },
-          body: blob
-        });
-        
-        if (!uploadRes.ok) throw new Error('R2 upload failed');
-        uploadedUrls.push(presignData.publicUrl);
+        // Upload directly to R2
+        const publicUrl = await uploadToR2(blob, fileName, 'image/jpeg');
+        uploadedUrls.push(publicUrl);
       }
       setImages(prev => [...prev, ...uploadedUrls]);
     } catch (err) {
       console.error('Upload error:', err);
-      alert('Error al subir imágenes: ' + err.message);
+      alert('Error al subir imágenes: ' + (err.message || 'Error desconocido'));
     } finally {
       setLoading(false);
     }
