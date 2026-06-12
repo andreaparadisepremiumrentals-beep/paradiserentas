@@ -157,7 +157,6 @@ export default function PublishPage() {
   const CATEGORIES = [
     { id: 'apartment', label: t.nav_apartments, icon: Building2 },
     { id: 'finca', label: t.nav_fincas, icon: Home },
-    { id: 'vehicle', label: t.nav_vehicles, icon: Ship },
   ];
 
   const AUTHORIZED_EMAILS = ['marlon', 'andrea', 'gustavo'];
@@ -353,7 +352,7 @@ export default function PublishPage() {
                 </div>
               </div>
 
-              <textarea placeholder={lang === 'es' ? "Descripción detallada..." : "Detailed description..."} className="input-field min-h-[150px] mt-4" value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} />
+              <textarea placeholder={lang === 'es' ? "Descripción detallada..." : "Detailed description..."} className="input-field min-h-[400px] mt-4" value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} />
             </div>
           </section>
 

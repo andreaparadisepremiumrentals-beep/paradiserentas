@@ -52,7 +52,6 @@ export default function MainLayout() {
   const NAV_ITEMS = [
     { to: '/apartments', label: t.nav_apartments, icon: Building2 },
     { to: '/fincas', label: t.nav_fincas, icon: Trees },
-    { to: '/water-vehicles', label: t.nav_vehicles, icon: Ship },
     { to: '/medellin-guide', label: t.nav_medellin, icon: Map },
     { to: '/about', label: t.nav_about, icon: Info },
   ];

@@ -9,7 +9,6 @@ import { useState, useEffect } from 'react';
 const CATEGORIES = [
   { id: 'apts', icon: Building2, to: '/apartments' },
   { id: 'fincas', icon: Trees, to: '/fincas' },
-  { id: 'water', icon: Ship, to: '/water-vehicles' },
 ];
 
 import { getProperties, removeProperty, isAuthorized } from '../lib/store';
@@ -58,7 +57,6 @@ export default function HomePage() {
   const CAT_INFO = [
     { title: t.cat_apartments, count: '30+' },
     { title: t.cat_fincas, count: '15+' },
-    { title: t.cat_vehicles, count: '5+' },
   ];
 
   return (

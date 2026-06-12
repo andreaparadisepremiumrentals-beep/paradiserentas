@@ -47,7 +47,6 @@ export default function Footer({ lang, t }) {
           <nav className="flex flex-col gap-4">
             <NavLink to="/apartments" className="text-sm text-paradise-300 hover:text-white transition-colors">{t.nav_apartments}</NavLink>
             <NavLink to="/fincas" className="text-sm text-paradise-300 hover:text-white transition-colors">{t.nav_fincas}</NavLink>
-            <NavLink to="/water-vehicles" className="text-sm text-paradise-300 hover:text-white transition-colors">{t.nav_vehicles}</NavLink>
             <NavLink to="/medellin-guide" className="text-sm text-paradise-300 hover:text-white transition-colors">{t.nav_medellin}</NavLink>
             <NavLink to="/ai-center" className="text-sm text-paradise-300 hover:text-white transition-colors">{t.nav_ai}</NavLink>
           </nav>

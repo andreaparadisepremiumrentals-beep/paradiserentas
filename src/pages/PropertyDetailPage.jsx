@@ -91,16 +91,16 @@ export default function PropertyDetailPage() {
           className="grid grid-cols-1 md:grid-cols-2 gap-4 h-[600px] mb-12 rounded-[40px] overflow-hidden shadow-2xl cursor-pointer group"
           onClick={() => setIsGalleryOpen(true)}
         >
-           <div className="relative h-full overflow-hidden">
-             <img src={property.images?.[0] || '/placeholder.jpg'} alt="Prop" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+           <div className="relative h-full overflow-hidden bg-paradise-950/50">
+             <img src={property.images?.[0] || '/placeholder.jpg'} alt="Prop" className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105" />
              <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
            </div>
            <div className="hidden md:grid grid-rows-2 gap-4">
-              <div className="relative h-full overflow-hidden rounded-tr-[40px]">
-                <img src={property.images?.[1] || property.images?.[0]} alt="Prop" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
+              <div className="relative h-full overflow-hidden rounded-tr-[40px] bg-paradise-950/50">
+                <img src={property.images?.[1] || property.images?.[0]} alt="Prop" className="w-full h-full object-contain transition-transform duration-700 hover:scale-105" />
               </div>
-              <div className="relative h-full overflow-hidden rounded-br-[40px]">
-                <img src={property.images?.[2] || property.images?.[0]} alt="Prop" className="w-full h-full object-cover brightness-50 transition-transform duration-700 hover:scale-105" />
+              <div className="relative h-full overflow-hidden rounded-br-[40px] bg-paradise-950/50">
+                <img src={property.images?.[2] || property.images?.[0]} alt="Prop" className="w-full h-full object-contain brightness-50 transition-transform duration-700 hover:scale-105" />
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-white font-black text-2xl uppercase tracking-widest gap-2">
                    <Plus size={32} />
                    <span>Ver Galería</span>
@@ -148,7 +148,7 @@ export default function PropertyDetailPage() {
 
             <div>
               <h3 className="text-xl font-bold text-paradise-50 mb-4 uppercase tracking-widest text-xs">Descripción</h3>
-              <p className="text-paradise-300 leading-relaxed text-lg">{property.description}</p>
+              <p className="text-paradise-300 leading-relaxed text-lg whitespace-pre-wrap">{property.description}</p>
             </div>
 
             {property.amenities && property.amenities.length > 0 && (
