@@ -1,4 +1,4 @@
-import { BookOpen, Handshake, AlertTriangle, Calendar, Info } from 'lucide-react';
+import { BookOpen, Handshake, AlertTriangle, Calendar, Info, ShieldCheck } from 'lucide-react';
 import { useOutletContext } from 'react-router-dom';
 
 export default function TermsPage() {

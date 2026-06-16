@@ -75,12 +75,20 @@ async function main() {
 
     if (needsUpdate) {
       console.log(`Updating property ${property.id} (${property.title}) with new image URLs...`);
-      const { error: updateError } = await sb.from('properties')
-        .update({ images: newImages })
-        .eq('id', property.id);
       
-      if (updateError) {
-        console.error(`Failed to update ${property.title}:`, updateError);
+      const response = await fetch(`${process.env.VITE_SUPABASE_URL}/rest/v1/properties?id=eq.${property.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': process.env.VITE_SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${process.env.VITE_SUPABASE_ANON_KEY}`,
+          'x-partner-secret': 'paradise-premium-secret-2024'
+        },
+        body: JSON.stringify({ images: newImages })
+      });
+      
+      if (!response.ok) {
+        console.error(`Failed to update ${property.title}:`, await response.text());
       } else {
         console.log(`Successfully updated ${property.title}.`);
         totalUpdated++;
