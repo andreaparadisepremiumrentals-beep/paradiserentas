@@ -219,7 +219,7 @@ export default function HomePage() {
              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
                 {/* Andrea */}
                 <div className="glass-card p-8 rounded-3xl border-white/5 bg-white/5 flex flex-col items-center text-center gap-5 hover:border-emerald-500/30 transition-colors shadow-xl">
-                  <img src="https://i.pravatar.cc/150?u=andrea1" alt="Andrea" className="w-24 h-24 rounded-full border-4 border-emerald-500/20 object-cover shadow-2xl" />
+                  <img src="/assets/andrea.jpeg" alt="Andrea" className="w-24 h-24 rounded-full border-4 border-emerald-500/20 object-cover shadow-2xl" />
                   <div>
                     <h3 className="text-paradise-50 font-black text-2xl">Andrea</h3>
                     <p className="text-[10px] text-emerald-400 font-black uppercase tracking-widest mt-1">Socia Fundadora</p>

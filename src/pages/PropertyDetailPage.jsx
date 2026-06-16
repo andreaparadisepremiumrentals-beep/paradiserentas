@@ -186,7 +186,7 @@ export default function PropertyDetailPage() {
                    {/* Andrea Contact */}
                    <div className="glass-card p-4 rounded-3xl border-white/5 bg-white/5 space-y-3">
                      <div className="flex items-center gap-3">
-                       <img src="https://i.pravatar.cc/150?u=andrea1" className="w-10 h-10 rounded-full border border-emerald-500/30" />
+                       <img src="/assets/andrea.jpeg" className="w-10 h-10 rounded-full border border-emerald-500/30 object-cover" />
                        <div>
                          <p className="text-paradise-50 font-bold text-sm">Andrea</p>
                          <p className="text-[8px] text-emerald-400 font-black uppercase tracking-widest">Socia Fundadora</p>
@@ -254,7 +254,7 @@ export default function PropertyDetailPage() {
                <div className="mt-8 pt-8 border-t border-white/5">
                  <div className="flex items-center gap-4">
                     <div className="flex -space-x-3">
-                      <img src="https://i.pravatar.cc/150?u=andrea1" className="w-10 h-10 rounded-full border-2 border-paradise-900" />
+                      <img src="/assets/andrea.jpeg" className="w-10 h-10 rounded-full border-2 border-paradise-900 object-cover" />
                       <img src="/assets/gustavo.jpg" className="w-10 h-10 rounded-full border-2 border-paradise-900 object-cover" />
                     </div>
                     <div>
