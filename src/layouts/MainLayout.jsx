@@ -7,7 +7,6 @@ import {
   Sparkles, Menu, X, Map, Info, Globe, Gem
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import AICopilotBubble from '../components/AICopilotBubble';
 import Footer from '../components/Footer';
 import translations from '../lib/translations';
 
@@ -142,8 +141,6 @@ export default function MainLayout() {
       </main>
 
       <Footer lang={lang} t={t} />
-
-      <AICopilotBubble lang={lang} />
 
       {/* Mobile Nav */}
       {mobileOpen && (
