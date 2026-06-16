@@ -236,7 +236,7 @@ export default function HomePage() {
 
                 {/* Gustavo */}
                 <div className="glass-card p-8 rounded-3xl border-white/5 bg-white/5 flex flex-col items-center text-center gap-5 hover:border-emerald-500/30 transition-colors shadow-xl">
-                  <img src="/assets/gustavo.jpg" alt="Gustavo" className="w-24 h-24 rounded-full border-4 border-emerald-500/20 object-cover shadow-2xl" />
+                  <img src="/assets/gustavo.jpeg" alt="Gustavo" className="w-24 h-24 rounded-full border-4 border-emerald-500/20 object-cover shadow-2xl" />
                   <div>
                     <h3 className="text-paradise-50 font-black text-2xl">Gustavo</h3>
                     <p className="text-[10px] text-emerald-400 font-black uppercase tracking-widest mt-1">Socio Fundador</p>
