@@ -72,32 +72,6 @@ import TermsPage from './pages/TermsPage';
 import GuestSignPage from './pages/GuestSignPage';
 
 export default function App() {
-  useEffect(() => {
-    window.Tawk_API = window.Tawk_API || {};
-    window.Tawk_API.onLoad = function() {
-      window.Tawk_API.setAttributes({
-        'language': 'es'
-      }, function(error){});
-      if (window.Tawk_API.setLanguage) {
-        window.Tawk_API.setLanguage('es');
-      }
-    };
-    window.Tawk_API.visitor = { language: 'es' };
-    window.Tawk_API.customStyle = {
-      visibility: {
-        desktop: { xOffset: 20, yOffset: 20 },
-        mobile: { xOffset: 10, yOffset: 10 }
-      }
-    };
-
-    const s1 = document.createElement('script');
-    s1.async = true;
-    s1.src = 'https://embed.tawk.to/69c458060976361c3598d20c/default';
-    s1.charset = 'UTF-8';
-    s1.setAttribute('crossorigin', '*');
-    document.body.appendChild(s1);
-  }, []);
-
   return (
     <BrowserRouter>
       <SEOUpdater />
