@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import Footer from '../components/Footer';
+import AICopilotBubble from '../components/AICopilotBubble';
 import translations from '../lib/translations';
 
 export default function MainLayout() {
@@ -164,6 +165,9 @@ export default function MainLayout() {
           </nav>
         </div>
       )}
+
+      {/* Official Paradise Copilot AI Assistant */}
+      <AICopilotBubble />
     </div>
   );
 }

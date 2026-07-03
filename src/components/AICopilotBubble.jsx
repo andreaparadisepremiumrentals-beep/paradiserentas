@@ -7,6 +7,7 @@ import { useState, useRef, useEffect } from 'react';
 import { MessageSquare, X, Send, Sparkles, Loader2, RotateCcw } from 'lucide-react';
 import ChatBubble from './ChatBubble';
 import { deepseekModel } from '../lib/deepseek';
+import { getProperties } from '../lib/store';
 
 // ─── KNOWLEDGE BASE ─────────────────────────────────────
 import kbData from '../data/knowledgeBase.json';
@@ -53,32 +54,89 @@ ${KNOWLEDGE_BASE}`;
 export default function AICopilotBubble() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { role: 'ai', content: '¡Hola! 👋 Soy el asistente de Paradise Premium. Puedo ayudarte a encontrar el apartamento, finca o experiencia perfecta en Medellín. ¿En qué te puedo ayudar?' }
+    { 
+      role: 'ai', 
+      content: '¡Hola! 👋 Soy Paradise Copilot, tu Asistente Inteligente oficial conectado en vivo a nuestra base de datos. Puedo mostrarte fotos reales, precios, enlaces y comunicarte de inmediato con nuestros fundadores. ¿Qué estás buscando hoy?' 
+    }
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
   const chatEndRef = useRef(null);
+  const timerRef = useRef(null);
 
   // Auto-scroll to bottom on new messages
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
 
-  const handleSend = async () => {
-    if (!input.trim() || loading) return;
+  // 1-minute automatic agent suggestion timer when chat is open
+  useEffect(() => {
+    if (!isOpen) {
+      if (timerRef.current) clearInterval(timerRef.current);
+      return;
+    }
 
-    const userMsg = { role: 'user', content: input.trim() };
+    timerRef.current = setTimeout(() => {
+      setMessages((prev) => {
+        // Don't duplicate if already showed contact recently
+        const lastMsg = prev[prev.length - 1];
+        if (lastMsg?.showContact) return prev;
+        return [
+          ...prev,
+          {
+            role: 'ai',
+            content: '⏱️ ¿Te gustaría verificar disponibilidad o agendar una visita en vivo? Puedes comunicarte directamente al celular de nuestros socios fundadores:',
+            showContact: true
+          }
+        ];
+      });
+    }, 60000); // 60 seconds (1 minute)
+
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [isOpen, messages.length]);
+
+  const handleSendText = async (textToSend) => {
+    const trimmed = (textToSend || input).trim();
+    if (!trimmed || loading) return;
+
+    const userMsg = { role: 'user', content: trimmed };
     const currentHistory = [...messages, userMsg];
     setMessages(currentHistory);
-    setInput('');
+    if (!textToSend) setInput('');
     setLoading(true);
 
     try {
+      const lower = trimmed.toLowerCase();
+      let matchedProperties = [];
+      let showContact = false;
+
+      if (lower.match(/contact|hablar|asesor|agente|whatsapp|tel[eé]fono|celular|andrea|gustavo|reserv|book|atenci[oó]n|humano/)) {
+        showContact = true;
+      }
+
+      if (lower.match(/apartament|apt|poblado|laureles|penthouse|loft|estudio|finca|casa|quinta|campo|barbosa|copacabana|sopetr[aá]n|san jer[oó]nimo|hatillo|piscina|jacuzzi|alquiler|renta|propiedad|cat[aá]logo|ver/)) {
+        const allProps = await getProperties();
+        if (lower.match(/apartament|apt|poblado|laureles|penthouse|loft|estudio/)) {
+          matchedProperties = allProps.filter(p => p.category === 'apartment').slice(0, 3);
+        } else if (lower.match(/finca|casa|quinta|campo|barbosa|copacabana|sopetr[aá]n|san jer[oó]nimo|hatillo/)) {
+          matchedProperties = allProps.filter(p => p.category === 'finca').slice(0, 3);
+        } else {
+          matchedProperties = allProps.slice(0, 3);
+        }
+      }
+
       // If Gemini is not configured, use offline fallback
       if (!deepseekModel) {
         const fallback = getOfflineResponse(userMsg.content);
-        setMessages(prev => [...prev, { role: 'ai', content: fallback }]);
+        setMessages(prev => [...prev, { 
+          role: 'ai', 
+          content: fallback,
+          properties: matchedProperties,
+          showContact: showContact || matchedProperties.length > 0
+        }]);
         return;
       }
 
@@ -99,7 +157,12 @@ Instrucción: Genera la respuesta del Paradise Copilot. Sé útil, conciso y pro
       const text = response.text();
 
       if (text && text.trim()) {
-        setMessages(prev => [...prev, { role: 'ai', content: text }]);
+        setMessages(prev => [...prev, { 
+          role: 'ai', 
+          content: text,
+          properties: matchedProperties,
+          showContact: showContact || matchedProperties.length > 0
+        }]);
         setRetryCount(0);
       } else {
         throw new Error('Empty response');
@@ -107,11 +170,13 @@ Instrucción: Genera la respuesta del Paradise Copilot. Sé útil, conciso y pro
     } catch (error) {
       console.error('Copilot Error:', error);
 
-      // Use intelligent offline fallback instead of generic error
       const fallback = getOfflineResponse(userMsg.content);
+      const allProps = await getProperties();
       setMessages(prev => [...prev, {
         role: 'ai',
-        content: fallback
+        content: fallback,
+        properties: allProps.slice(0, 2),
+        showContact: true
       }]);
       setRetryCount(prev => prev + 1);
     } finally {
@@ -119,10 +184,12 @@ Instrucción: Genera la respuesta del Paradise Copilot. Sé útil, conciso y pro
     }
   };
 
+  const handleSend = () => handleSendText(input);
+
   const clearChat = () => {
     setMessages([{
       role: 'ai',
-      content: '¡Chat reiniciado! 🔄 ¿En qué te puedo ayudar? Puedo recomendarte propiedades, zonas de Medellín, restaurantes, o ayudarte a contactar a nuestro equipo.'
+      content: '¡Chat reiniciado! 🔄 ¿En qué te puedo ayudar? Puedo mostrarte tarjetas interactivas de nuestras fincas y apartamentos en Medellín, o conectarte directo al WhatsApp de Andrea y Gustavo.'
     }]);
     setRetryCount(0);
   };
@@ -175,13 +242,17 @@ Instrucción: Genera la respuesta del Paradise Copilot. Sé útil, conciso y pro
           {/* Suggested Quick Actions */}
           {messages.length <= 2 && (
             <div className="px-4 pb-2 flex flex-wrap gap-2">
-              {['🏠 Apartamentos', '🌴 Fincas', '🗺️ Guía Medellín', '📞 Contacto'].map((q) => (
+              {[
+                { label: '🏠 Ver Apartamentos', query: 'Muéstrame apartamentos disponibles en Medellín' },
+                { label: '🌴 Ver Fincas', query: 'Busco fincas en Barbosa y alrededores con piscina' },
+                { label: '📞 Contactar Asesor', query: 'Quiero contactar al WhatsApp de Andrea o Gustavo' }
+              ].map((item) => (
                 <button
-                  key={q}
-                  onClick={() => { setInput(q.replace(/^[^\s]+\s/, '')); }}
-                  className="text-[10px] font-bold bg-white/5 border border-white/10 text-paradise-300 px-3 py-1.5 rounded-full hover:bg-accent-500/10 hover:text-accent-400 hover:border-accent-500/20 transition-all"
+                  key={item.label}
+                  onClick={() => handleSendText(item.query)}
+                  className="text-[10px] font-bold bg-white/5 border border-white/10 text-paradise-300 px-3 py-1.5 rounded-full hover:bg-emerald-500/20 hover:text-emerald-400 hover:border-emerald-500/40 transition-all shadow-md"
                 >
-                  {q}
+                  {item.label}
                 </button>
               ))}
             </div>
