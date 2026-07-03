@@ -65,11 +65,16 @@ function findMatchingProperties(query, allProps) {
     return valid.map(s => s.prop).slice(0, 3);
   }
 
-  // If no location matched or general query, fallback to category or latest properties
-  if (wantsFinca && qLocations.length === 0) return allProps.filter(p => p.category === 'finca').slice(0, 3);
-  if (wantsApt && qLocations.length === 0) return allProps.filter(p => p.category === 'apartment').slice(0, 3);
+  // If the user requested a specific location (qLocations > 0) or any area, DO NOT show properties from other areas!
+  if (qLocations.length > 0) {
+    return []; // 100% strict: return 0 photo cards if no property exists in the requested area
+  }
 
-  return qLocations.length > 0 ? [] : allProps.slice(0, 3);
+  // If no location was specified (general query like "muestrame fincas"), show latest properties of that category
+  if (wantsFinca) return allProps.filter(p => p.category === 'finca').slice(0, 3);
+  if (wantsApt) return allProps.filter(p => p.category === 'apartment').slice(0, 3);
+
+  return [];
 }
 
 function getOfflineResponse(userMessage) {
@@ -178,16 +183,22 @@ export default function AICopilotBubble() {
       if (lower.match(/apartament|apt|poblado|laureles|penthouse|loft|estudio|finca|casa|quinta|campo|barbosa|copacabana|sopetr[aá]n|san jer[oó]nimo|hatillo|piscina|jacuzzi|alquiler|renta|propiedad|cat[aá]logo|ver/)) {
         const allProps = await getProperties();
         matchedProperties = findMatchingProperties(trimmed, allProps);
+        if (matchedProperties.length === 0) {
+          showContact = true;
+        }
       }
 
       // If Gemini is not configured, use offline fallback
       if (!deepseekModel) {
-        const fallback = getOfflineResponse(userMsg.content);
+        let fallback = getOfflineResponse(userMsg.content);
+        if (matchedProperties.length === 0 && lower.match(/finca|apartament|apt|casa/)) {
+          fallback = "En este momento no disponemos en nuestro catálogo en línea de una propiedad con esas características exactas en la zona que solicitas. Sin embargo, nuestros fundadores Andrea y Gustavo tienen opciones privadas y exclusivas fuera de catálogo. Por favor comunícate con ellos directo a WhatsApp:";
+        }
         setMessages(prev => [...prev, { 
           role: 'ai', 
           content: fallback,
           properties: matchedProperties,
-          showContact: showContact || matchedProperties.length > 0
+          showContact: showContact || matchedProperties.length === 0 || matchedProperties.length > 0
         }]);
         return;
       }
@@ -202,7 +213,7 @@ export default function AICopilotBubble() {
 CONVERSACIÓN:
 ${historyContext}
 
-Instrucción: Genera la respuesta del Paradise Copilot. Sé útil, conciso y profesional.`;
+Instrucción: Genera la respuesta del Paradise Copilot SIEMPRE EN ESPAÑOL. Si el usuario pide una propiedad en una zona donde no tenemos catálogo en línea, explícalo con amabilidad y sugiere contactar a Andrea o Gustavo. Sé útil, conciso y profesional.`;
 
       const result = await deepseekModel.generateContent(prompt);
       const response = await result.response;
@@ -213,7 +224,7 @@ Instrucción: Genera la respuesta del Paradise Copilot. Sé útil, conciso y pro
           role: 'ai', 
           content: text,
           properties: matchedProperties,
-          showContact: showContact || matchedProperties.length > 0
+          showContact: showContact || matchedProperties.length === 0 || matchedProperties.length > 0
         }]);
         setRetryCount(0);
       } else {
@@ -222,12 +233,14 @@ Instrucción: Genera la respuesta del Paradise Copilot. Sé útil, conciso y pro
     } catch (error) {
       console.error('Copilot Error:', error);
 
-      const fallback = getOfflineResponse(userMsg.content);
-      const allProps = await getProperties();
+      let fallback = getOfflineResponse(userMsg.content);
+      if (matchedProperties.length === 0) {
+        fallback = "Actualmente estamos verificando disponibilidad específica para esa zona. Para brindarte opciones personalizadas inmediatas, te recomendamos escribir al WhatsApp de nuestros socios Andrea y Gustavo:";
+      }
       setMessages(prev => [...prev, {
         role: 'ai',
         content: fallback,
-        properties: allProps.slice(0, 2),
+        properties: matchedProperties,
         showContact: true
       }]);
       setRetryCount(prev => prev + 1);
