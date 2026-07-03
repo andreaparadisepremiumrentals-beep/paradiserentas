@@ -225,10 +225,10 @@ export default function HomePage() {
                     <p className="text-[10px] text-emerald-400 font-black uppercase tracking-widest mt-1">Socia Fundadora</p>
                   </div>
                   <div className="flex flex-col sm:flex-row gap-3 w-full mt-4">
-                    <a href="https://wa.me/573043399492" target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 p-4 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 rounded-2xl text-xs font-black uppercase transition-all">
+                    <a href="https://wa.me/573054687173" target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 p-4 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 rounded-2xl text-xs font-black uppercase transition-all">
                       <MessageCircle size={18} /> WhatsApp
                     </a>
-                    <a href="tel:573043399492" className="flex-1 flex items-center justify-center gap-2 p-4 bg-white/5 hover:bg-white/10 text-paradise-300 rounded-2xl text-xs font-black uppercase transition-all">
+                    <a href="tel:573054687173" className="flex-1 flex items-center justify-center gap-2 p-4 bg-white/5 hover:bg-white/10 text-paradise-300 rounded-2xl text-xs font-black uppercase transition-all">
                       <Phone size={18} /> Llamar
                     </a>
                   </div>

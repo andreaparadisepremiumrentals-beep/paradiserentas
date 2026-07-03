@@ -194,7 +194,7 @@ export default function PropertyDetailPage() {
                      </div>
                      <div className="grid grid-cols-2 gap-2">
                        <a 
-                         href={`https://wa.me/573043399492?text=${encodeURIComponent(`Hola Andrea, estoy interesado en la propiedad: ${property.title}.`)}`}
+                         href={`https://wa.me/573054687173?text=${encodeURIComponent(`Hola Andrea, estoy interesado en la propiedad: ${property.title}.`)}`}
                          target="_blank"
                          rel="noopener noreferrer"
                          className="flex items-center justify-center gap-2 p-3 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 rounded-xl text-[10px] font-black uppercase transition-all"
@@ -202,7 +202,7 @@ export default function PropertyDetailPage() {
                          <MessageCircle size={14} /> WhatsApp
                        </a>
                        <a 
-                         href="tel:573043399492"
+                         href="tel:573054687173"
                          className="flex items-center justify-center gap-2 p-3 bg-white/5 hover:bg-white/10 text-paradise-300 rounded-xl text-[10px] font-black uppercase transition-all"
                        >
                          <Phone size={14} /> Llamar
