@@ -14,6 +14,64 @@ import kbData from '../data/knowledgeBase.json';
 
 const { KNOWLEDGE_BASE, FALLBACK_RESPONSES } = kbData;
 
+function findMatchingProperties(query, allProps) {
+  const norm = (str) => (str || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  const qNorm = norm(query);
+
+  // Known location keywords
+  const locations = ['sopetran', 'barbosa', 'copacabana', 'hatillo', 'san jeronimo', 'jeronimo', 'poblado', 'laureles', 'san diego', 'frontera', 'guatape', 'sabaneta'];
+  const qLocations = locations.filter(loc => qNorm.includes(loc));
+
+  // Known category keywords
+  const wantsFinca = qNorm.match(/finca|casa|quinta|campo|vill|recreo/);
+  const wantsApt = qNorm.match(/apartament|apt|penthouse|loft|estudio|apartaestudio/);
+
+  const scored = allProps.map(prop => {
+    let score = 0;
+    const pText = norm(`${prop.title} ${prop.location} ${prop.neighborhood} ${prop.description}`);
+
+    // Strict location matching when a specific town or neighborhood is requested
+    if (qLocations.length > 0) {
+      const matchedLoc = qLocations.some(loc => pText.includes(loc));
+      if (matchedLoc) {
+        score += 150;
+      } else {
+        score -= 200; // Heavily penalize properties in other towns
+      }
+    }
+
+    // Category matching
+    if (wantsFinca) {
+      if (prop.category === 'finca') score += 50;
+      else score -= 80;
+    } else if (wantsApt) {
+      if (prop.category === 'apartment') score += 50;
+      else score -= 80;
+    }
+
+    // Keyword & amenity matching
+    const words = qNorm.split(/\s+/);
+    words.forEach(w => {
+      if (w.length > 3 && !locations.includes(w) && pText.includes(w)) score += 10;
+    });
+
+    return { prop, score };
+  });
+
+  // Return top properties that actually match the location/criteria
+  const valid = scored.filter(s => s.score > 0).sort((a, b) => b.score - a.score);
+  
+  if (valid.length > 0) {
+    return valid.map(s => s.prop).slice(0, 3);
+  }
+
+  // If no location matched or general query, fallback to category or latest properties
+  if (wantsFinca && qLocations.length === 0) return allProps.filter(p => p.category === 'finca').slice(0, 3);
+  if (wantsApt && qLocations.length === 0) return allProps.filter(p => p.category === 'apartment').slice(0, 3);
+
+  return qLocations.length > 0 ? [] : allProps.slice(0, 3);
+}
+
 function getOfflineResponse(userMessage) {
   const msg = userMessage.toLowerCase();
   if (msg.match(/hola|hi|hey|buenos|buenas|saludos/)) {
@@ -119,13 +177,7 @@ export default function AICopilotBubble() {
 
       if (lower.match(/apartament|apt|poblado|laureles|penthouse|loft|estudio|finca|casa|quinta|campo|barbosa|copacabana|sopetr[aá]n|san jer[oó]nimo|hatillo|piscina|jacuzzi|alquiler|renta|propiedad|cat[aá]logo|ver/)) {
         const allProps = await getProperties();
-        if (lower.match(/apartament|apt|poblado|laureles|penthouse|loft|estudio/)) {
-          matchedProperties = allProps.filter(p => p.category === 'apartment').slice(0, 3);
-        } else if (lower.match(/finca|casa|quinta|campo|barbosa|copacabana|sopetr[aá]n|san jer[oó]nimo|hatillo/)) {
-          matchedProperties = allProps.filter(p => p.category === 'finca').slice(0, 3);
-        } else {
-          matchedProperties = allProps.slice(0, 3);
-        }
+        matchedProperties = findMatchingProperties(trimmed, allProps);
       }
 
       // If Gemini is not configured, use offline fallback
