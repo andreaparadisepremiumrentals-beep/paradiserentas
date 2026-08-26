@@ -8,7 +8,6 @@ import {
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import Footer from '../components/Footer';
-import AICopilotBubble from '../components/AICopilotBubble';
 import ContactWidget from '../components/ContactWidget';
 import translations from '../lib/translations';
 
@@ -167,8 +166,8 @@ export default function MainLayout() {
         </div>
       )}
 
-      {/* Official Paradise Copilot AI Assistant */}
-      <AICopilotBubble />
+      {/* Smart Contact Widget */}
+      <ContactWidget lang={lang} />
     </div>
   );
 }

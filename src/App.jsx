@@ -62,7 +62,6 @@ import ApartmentsPage from './pages/ApartmentsPage';
 import FincasPage from './pages/FincasPage';
 import WaterVehiclesPage from './pages/WaterVehiclesPage';
 import SupportPage from './pages/SupportPage';
-import AICenterPage from './pages/AICenterPage';
 import AboutPage from './pages/AboutPage';
 import MedellinGuidePage from './pages/MedellinGuidePage';
 import PublishPage from './pages/PublishPage';
@@ -85,7 +84,6 @@ export default function App() {
             <Route path="about" element={<AboutPage />} />
             <Route path="medellin-guide" element={<MedellinGuidePage />} />
             <Route path="support" element={<SupportPage />} />
-            <Route path="ai-center" element={<AICenterPage />} />
             <Route path="publish" element={<PublishPage />} />
             <Route path="property/:id" element={<PropertyDetailPage />} />
             <Route path="privacy" element={<PrivacyPage />} />
