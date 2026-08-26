@@ -48,6 +48,7 @@ export default function Footer({ lang, t }) {
             <NavLink to="/apartments" className="text-sm text-paradise-300 hover:text-white transition-colors">{t.nav_apartments}</NavLink>
             <NavLink to="/fincas" className="text-sm text-paradise-300 hover:text-white transition-colors">{t.nav_fincas}</NavLink>
             <NavLink to="/medellin-guide" className="text-sm text-paradise-300 hover:text-white transition-colors">{t.nav_medellin}</NavLink>
+            <NavLink to="/ai-center" className="text-sm text-paradise-300 hover:text-white transition-colors">{t.nav_ai}</NavLink>
           </nav>
         </div>
 
