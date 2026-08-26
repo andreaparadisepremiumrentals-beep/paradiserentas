@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getModel } from '../lib/deepseek';
+import { getModel } from '../lib/gemini';
 import { Sparkles, Loader2, Copy, Check, Users } from 'lucide-react';
 
 const AMENITIES_OPTIONS = [

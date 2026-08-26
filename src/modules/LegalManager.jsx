@@ -18,7 +18,7 @@ import {
   Type
 } from 'lucide-react';
 import RemoteSignModal from '../components/RemoteSignModal';
-import { deepseekModel } from '../lib/deepseek';
+import { geminiModel as deepseekModel } from '../lib/gemini';
 import { getProperties, saveSignedContract } from '../lib/store';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
