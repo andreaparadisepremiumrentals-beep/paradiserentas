@@ -83,7 +83,7 @@ export default function ChatBubble({ message }) {
                         Ver Detalle <ArrowRight size={12} />
                       </Link>
                       <a
-                        href={`https://wa.me/573054687173?text=${encodeURIComponent(`Hola Andrea, me interesa la propiedad del chat IA: ${prop.title} (ID: ${prop.id})`)}`}
+                        href={`https://wa.me/573015176590?text=${encodeURIComponent(`Hola, me interesa la propiedad sugerida por la IA: ${prop.title} (ID: ${prop.id})`)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center justify-center gap-1.5 py-2 px-3 bg-emerald-500 hover:bg-emerald-400 text-paradise-950 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all text-center shadow-lg shadow-emerald-500/20"
@@ -109,7 +109,7 @@ export default function ChatBubble({ message }) {
             </div>
             <div className="grid grid-cols-2 gap-2">
               <a
-                href="https://wa.me/573054687173?text=Hola%20Andrea,%20vengo%20del%20asistente%20IA%20de%20Paradise%20Premium."
+                href="https://wa.me/573015176590?text=Hola%20Andrea,%20vengo%20del%20asistente%20IA%20de%20Paradise%20Premium."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 p-2.5 bg-white/5 hover:bg-emerald-500/20 border border-white/10 hover:border-emerald-500/40 rounded-xl transition-all group"
@@ -121,7 +121,7 @@ export default function ChatBubble({ message }) {
                 </div>
               </a>
               <a
-                href="https://wa.me/573104507952?text=Hola%20Gustavo,%20vengo%20del%20asistente%20IA%20de%20Paradise%20Premium."
+                href="https://wa.me/573015176590?text=Hola%20Gustavo,%20vengo%20del%20asistente%20IA%20de%20Paradise%20Premium."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 p-2.5 bg-white/5 hover:bg-emerald-500/20 border border-white/10 hover:border-emerald-500/40 rounded-xl transition-all group"
@@ -132,6 +132,34 @@ export default function ChatBubble({ message }) {
                   <p className="text-[9px] font-black text-emerald-400 uppercase tracking-tighter">WhatsApp</p>
                 </div>
               </a>
+            </div>
+
+            <div className="pt-2 border-t border-white/10 grid grid-cols-2 gap-2">
+               {(() => {
+                 const hour = new Date().toLocaleString('en-US', { timeZone: 'America/Bogota', hour: 'numeric', hour12: false });
+                 const day = new Date().toLocaleString('en-US', { timeZone: 'America/Bogota', weekday: 'short' });
+                 const isOnline = (day !== 'Sun') && (hour >= 8 && hour < 18);
+                 
+                 return isOnline ? (
+                   <a
+                     href="https://wa.me/573015176590?text=📞%20Hola,%20me%20gustar%C3%ADa%20recibir%20una%20llamada%20de%20un%20asesor."
+                     target="_blank"
+                     rel="noopener noreferrer"
+                     className="col-span-2 flex items-center justify-center gap-2 p-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all shadow-md"
+                   >
+                     📞 Solicitar Llamada (Asesor Llama)
+                   </a>
+                 ) : (
+                   <a
+                     href="https://wa.me/573015176590?text=📋%20Por%20favor%20devuélvanme%20la%20llamada%20en%20horario%20laboral."
+                     target="_blank"
+                     rel="noopener noreferrer"
+                     className="col-span-2 flex items-center justify-center gap-2 p-2 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all shadow-md"
+                   >
+                     📋 Agendar Llamada (Fuera de Horario)
+                   </a>
+                 );
+               })()}
             </div>
           </div>
         )}

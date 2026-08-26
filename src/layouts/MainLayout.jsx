@@ -169,9 +169,6 @@ export default function MainLayout() {
 
       {/* Official Paradise Copilot AI Assistant */}
       <AICopilotBubble />
-
-      {/* Smart Contact Widget */}
-      <ContactWidget lang={lang} />
     </div>
   );
 }
