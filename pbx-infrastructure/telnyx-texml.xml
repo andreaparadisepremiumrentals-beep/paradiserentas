@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+    <!-- 
+        TeXML de Telnyx (100% compatible con TwiML).
+        Este código recibe la llamada, reproduce un mensaje de bienvenida 
+        y la transfiere a una cuenta SIP de Telnyx.
+    -->
+    <Say voice="alice" language="es-MX">
+        Gracias por llamar a Paradise Rentas. Estamos transfiriendo su llamada con un asesor.
+    </Say>
+    <Dial record="record-from-answer">
+        <!-- 
+            Reemplaza "usuario@sip.telnyx.com" 
+            por la conexión SIP que crees en el portal de Telnyx.
+        -->
+        <Sip>sip:usuario@sip.telnyx.com</Sip>
+    </Dial>
+</Response>

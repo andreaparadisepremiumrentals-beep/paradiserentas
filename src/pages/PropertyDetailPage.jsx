@@ -5,9 +5,10 @@ import { useParams, Link } from 'react-router-dom';
 import { 
   MapPin, Bed, Bath, Maximize, CheckCircle, 
   MessageCircle, Phone, Star, ChevronLeft, 
-  Wifi, Car, Tv, Wind, Coffee, Plus, X, ChevronRight, Loader2, Video
+  Wifi, Car, Tv, Wind, Coffee, Plus, X, ChevronRight, Loader2, Video,
+  ChevronUp, ChevronDown
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 
@@ -19,6 +20,7 @@ export default function PropertyDetailPage() {
   const [activeImage, setActiveImage] = useState(0);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const { lang, t } = useOutletContext();
+  const thumbnailRefs = useRef([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -28,6 +30,17 @@ export default function PropertyDetailPage() {
     };
     fetchProp();
   }, [id]);
+
+  // Auto-scroll thumbnail container to keep active thumbnail visible
+  useEffect(() => {
+    if (isGalleryOpen && thumbnailRefs.current[activeImage]) {
+      thumbnailRefs.current[activeImage].scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center'
+      });
+    }
+  }, [activeImage, isGalleryOpen]);
 
   // Bloquear scroll del body cuando la galería esté abierta
   useEffect(() => {
@@ -59,6 +72,37 @@ export default function PropertyDetailPage() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isGalleryOpen, property]);
 
+  // Soporte de navegación por rueda de ratón / touchpad (Mouse Wheel Scroll)
+  useEffect(() => {
+    if (!isGalleryOpen || !property || !property.images || property.images.length <= 1) return;
+
+    let isCooldown = false;
+    const handleWheel = (e) => {
+      if (isCooldown) return;
+      if (Math.abs(e.deltaY) < 10 && Math.abs(e.deltaX) < 10) return;
+
+      const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+
+      if (delta > 0) {
+        // Scroll abajo / derecha -> Siguiente foto
+        setActiveImage((prev) => (prev === property.images.length - 1 ? 0 : prev + 1));
+      } else if (delta < 0) {
+        // Scroll arriba / izquierda -> Foto anterior
+        setActiveImage((prev) => (prev === 0 ? property.images.length - 1 : prev - 1));
+      }
+
+      isCooldown = true;
+      setTimeout(() => {
+        isCooldown = false;
+      }, 220);
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: true });
+    return () => window.removeEventListener('wheel', handleWheel);
+  }, [isGalleryOpen, property]);
+
+  // Removed collage wheel listener
+
   if (!property) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] bg-paradise-950 animate-fade-in">
@@ -86,28 +130,34 @@ export default function PropertyDetailPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 pt-12">
-        {/* Gallery Grid */}
-        <div 
-          className="grid grid-cols-1 md:grid-cols-2 gap-4 h-[600px] mb-12 rounded-[40px] overflow-hidden shadow-2xl cursor-pointer group"
-          onClick={() => setIsGalleryOpen(true)}
-        >
-           <div className="relative h-full overflow-hidden bg-paradise-950/50">
-             <img src={property.images?.[0] || '/placeholder.jpg'} alt="Prop" className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105" />
-             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
-           </div>
-           <div className="hidden md:grid grid-rows-2 gap-4">
-              <div className="relative h-full overflow-hidden rounded-tr-[40px] bg-paradise-950/50">
-                <img src={property.images?.[1] || property.images?.[0]} alt="Prop" className="w-full h-full object-contain transition-transform duration-700 hover:scale-105" />
-              </div>
-              <div className="relative h-full overflow-hidden rounded-br-[40px] bg-paradise-950/50">
-                <img src={property.images?.[2] || property.images?.[0]} alt="Prop" className="w-full h-full object-contain brightness-50 transition-transform duration-700 hover:scale-105" />
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-white font-black text-2xl uppercase tracking-widest gap-2">
-                   <Plus size={32} />
-                   <span>Ver Galería</span>
-                   <span className="text-xs font-bold text-white/60">({property.images?.length || 0} FOTOS)</span>
+        {/* Main Page Horizontal Scrollable Gallery */}
+        <div className="relative mb-12">
+          <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory custom-scrollbar pb-4 -mx-6 px-6 md:mx-0 md:px-0">
+            {property.images?.map((img, idx) => (
+              <div 
+                key={idx}
+                className="relative h-[400px] md:h-[600px] w-[85%] sm:w-[70%] md:w-[60%] lg:w-[50%] flex-shrink-0 snap-center rounded-[32px] md:rounded-[40px] overflow-hidden bg-paradise-950/50 cursor-pointer group shadow-2xl border border-white/5"
+                onClick={() => {
+                  setActiveImage(idx);
+                  setIsGalleryOpen(true);
+                }}
+              >
+                <img 
+                  src={img} 
+                  alt={`Prop ${idx}`} 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-black/15 group-hover:bg-transparent transition-colors" />
+                
+                {/* Image Counter Badge */}
+                <div className="absolute bottom-6 right-6 md:bottom-8 md:right-8 bg-black/60 backdrop-blur-md text-white text-[10px] md:text-xs font-black px-4 py-2 rounded-full border border-white/20 uppercase tracking-widest shadow-xl flex items-center gap-2">
+                   <Maximize size={14} className="text-emerald-400" />
+                   <span>{idx + 1} / {property.images.length}</span>
                 </div>
               </div>
-           </div>
+            ))}
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
@@ -287,9 +337,12 @@ export default function PropertyDetailPage() {
                 <span>Volver al Detalle</span>
               </button>
               
-              {/* Central counter */}
-              <div className="hidden sm:block px-5 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 font-semibold text-xs uppercase tracking-widest">
-                Imagen {String(activeImage + 1).padStart(2, '0')} de {String(property.images?.length || 0).padStart(2, '0')}
+              {/* Central counter & navigation hint */}
+              <div className="hidden sm:flex items-center gap-3 px-5 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 font-semibold text-xs uppercase tracking-widest">
+                <span>Imagen {String(activeImage + 1).padStart(2, '0')} de {String(property.images?.length || 0).padStart(2, '0')}</span>
+                <span className="text-emerald-400/80 text-[10px] font-normal normal-case border-l border-white/10 pl-3">
+                  (Usa el scroll 🖱️ o las flechas ⬅️ ➡️)
+                </span>
               </div>
 
               <button 
@@ -334,6 +387,7 @@ export default function PropertyDetailPage() {
                  {property.images.map((img, idx) => (
                    <button 
                      key={idx}
+                     ref={(el) => (thumbnailRefs.current[idx] = el)}
                      onClick={() => setActiveImage(idx)}
                      className={`relative w-20 h-14 rounded-xl overflow-hidden border-2 transition-all duration-300 flex-shrink-0 cursor-pointer ${
                        activeImage === idx 

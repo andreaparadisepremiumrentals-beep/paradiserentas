@@ -9,6 +9,7 @@ import {
 import { useState, useEffect } from 'react';
 import Footer from '../components/Footer';
 import AICopilotBubble from '../components/AICopilotBubble';
+import ContactWidget from '../components/ContactWidget';
 import translations from '../lib/translations';
 
 export default function MainLayout() {
@@ -66,7 +67,7 @@ export default function MainLayout() {
         {/* Column 1: Brand Logo (Left, aligned) */}
         <NavLink to="/" className="flex items-center gap-4 group flex-shrink-0">
           {/* Logo with blended background — no white box */}
-          <div className="h-[48px] md:h-[63px] flex items-center overflow-hidden">
+          <div className="h-[45px] md:h-[60px] flex items-center overflow-hidden">
              <img 
                src="/assets/logoparadise.png?v=3" 
                alt="Paradise Premium Rentals"
@@ -168,6 +169,9 @@ export default function MainLayout() {
 
       {/* Official Paradise Copilot AI Assistant */}
       <AICopilotBubble />
+
+      {/* Smart Contact Widget */}
+      <ContactWidget lang={lang} />
     </div>
   );
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+    <!-- 
+        Cuando un cliente llama a tu número de Twilio (que es a donde se desvían las llamadas de tu SIM prepago),
+        esta regla hace que la llamada se dirija a Chatwoot para que el asesor pueda contestar.
+        El atributo 'record="record-from-answer"' asegura que la llamada se grabe.
+    -->
+    <Dial record="record-from-answer">
+        <!-- 
+            Aquí debes reemplazar "sip:tu_usuario@tu_dominio.sip.twilio.com" 
+            por la dirección SIP que Chatwoot genera cuando conectas Twilio.
+        -->
+        <Sip>sip:chatwoot_agent@tu_dominio.sip.twilio.com</Sip>
+    </Dial>
+</Response>

@@ -1,0 +1,92 @@
+version: '3'
+
+services:
+  # ----------------------------------------------------
+  # BASE DE DATOS Y CACHÉ (Compartidos)
+  # ----------------------------------------------------
+  postgres:
+    image: postgres:15
+    restart: always
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=chatwoot
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres_strong_password
+
+  redis:
+    image: redis:7-alpine
+    restart: always
+    command: ["sh", "-c", "redis-server --requirepass \"$REDIS_PASSWORD\""]
+    env_file: .env
+    volumes:
+      - redis_data:/data
+    ports:
+      - '6379:6379'
+
+  # ----------------------------------------------------
+  # CHATWOOT
+  # ----------------------------------------------------
+  chatwoot_web:
+    image: chatwoot/chatwoot:latest
+    depends_on:
+      - postgres
+      - redis
+    ports:
+      - '3000:3000'
+    environment:
+      - SECRET_KEY_BASE=generate_a_secure_random_string_here
+      - FRONTEND_URL=https://app.tuinmobiliaria.com
+      - POSTGRES_DATABASE=chatwoot
+      - POSTGRES_HOST=postgres
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=postgres_strong_password
+      - REDIS_URL=redis://default:redis_strong_password@redis:6379
+      - RAILS_ENV=production
+      - INSTALLATION_ENV=docker
+    command: ['bundle', 'exec', 'rails', 's', '-p', '3000', '-b', '0.0.0.0']
+
+  chatwoot_worker:
+    image: chatwoot/chatwoot:latest
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - SECRET_KEY_BASE=generate_a_secure_random_string_here
+      - FRONTEND_URL=https://app.tuinmobiliaria.com
+      - POSTGRES_DATABASE=chatwoot
+      - POSTGRES_HOST=postgres
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=postgres_strong_password
+      - REDIS_URL=redis://default:redis_strong_password@redis:6379
+      - RAILS_ENV=production
+      - INSTALLATION_ENV=docker
+    command: ['bundle', 'exec', 'sidekiq', '-C', 'config/sidekiq.yml']
+
+  # ----------------------------------------------------
+  # EVOLUTION API
+  # ----------------------------------------------------
+  evolution_api:
+    image: atendai/evolution-api:latest
+    restart: always
+    ports:
+      - '8080:8080'
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - SERVER_URL=https://api.tuinmobiliaria.com
+      - AUTHENTICATION_API_KEY=evolution_strong_api_key
+      # Base de datos (Usamos la misma instancia de Postgres pero otra DB lógica si se desea)
+      - DATABASE_PROVIDER=postgresql
+      - DATABASE_CONNECTION_URI=postgresql://postgres:postgres_strong_password@postgres:5432/evolution?schema=public
+      # Redis para gestión de sesiones de WhatsApp
+      - REDIS_URI=redis://default:redis_strong_password@redis:6379
+      - WEBHOOK_GLOBAL_URL=
+      - WEBHOOK_GLOBAL_ENABLED=false
+
+volumes:
+  postgres_data:
+  redis_data:

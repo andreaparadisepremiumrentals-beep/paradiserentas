@@ -13,9 +13,11 @@ const localOpenai = apiKey ? new OpenAI({
   dangerouslyAllowBrowser: true // Necessary for local client-side fallback
 }) : null;
 
-if (!apiKey) {
+export const hasLocalConfig = !!apiKey;
+
+if (!hasLocalConfig) {
   console.log(
-    '[Paradise] No local VITE_DEEPSEEK_API_KEY detected. Calls will go entirely through Supabase Edge Functions.'
+    '[Paradise] No local VITE_DEEPSEEK_API_KEY detected. Calls will attempt to go through Supabase Edge Functions.'
   );
 }
 
