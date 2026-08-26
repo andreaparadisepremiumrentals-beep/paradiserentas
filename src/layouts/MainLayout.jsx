@@ -120,14 +120,8 @@ export default function MainLayout() {
             <Globe size={20} />
           </button>
 
-          {/* Publish Button */}
-          <NavLink 
-            to="/publish" 
-            className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-7 py-3 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] transition-all active:scale-95 shadow-md whitespace-nowrap"
-          >
-            {t.nav_publish}
-          </NavLink>
           
+
           <button className="xl:hidden p-3 bg-white/10 rounded-full text-white" onClick={() => setMobileOpen(true)}>
             <Menu size={22} />
           </button>

@@ -161,12 +161,12 @@ export default function ContactWidget({ lang = 'es' }) {
   }[lang] || {};
 
   return (
-    <div ref={menuRef} className="fixed bottom-6 left-6 z-[90] flex flex-col items-start">
+    <div ref={menuRef} className="fixed bottom-6 right-6 z-[90] flex flex-col items-end">
       {/* Expanded Menu */}
       {isOpen && !showCallbackForm && (
         <div className="mb-4 w-[300px] sm:w-[320px] animate-fade-in">
           {/* Status Header */}
-          <div className="bg-paradise-950/95 backdrop-blur-2xl rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
+          <div className="bg-paradise-950 rounded-2xl border border-white/10 shadow-lg overflow-hidden">
             {/* Online/Offline Banner */}
             <div className={`px-5 py-3 flex items-center justify-between border-b border-white/5 ${
               isOnline 
@@ -196,7 +196,7 @@ export default function ContactWidget({ lang = 'es' }) {
                     onClick={handleWhatsAppCall}
                     className="w-full flex items-center gap-4 p-3.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 hover:border-emerald-500/40 transition-all group"
                   >
-                    <div className="w-11 h-11 rounded-xl bg-emerald-500 flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:scale-110 transition-transform">
+                    <div className="w-11 h-11 rounded-xl bg-emerald-500 flex items-center justify-center group-hover:scale-110 transition-transform">
                       <Phone size={20} className="text-white" />
                     </div>
                     <div className="text-left">
@@ -225,7 +225,7 @@ export default function ContactWidget({ lang = 'es' }) {
                   onClick={() => setShowCallbackForm(true)}
                   className="w-full flex items-center gap-4 p-3.5 rounded-xl bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/20 hover:border-orange-500/40 transition-all group"
                 >
-                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-lg shadow-orange-500/20 group-hover:scale-110 transition-transform">
+                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center group-hover:scale-110 transition-transform">
                     <PhoneOff size={20} className="text-white" />
                   </div>
                   <div className="text-left">
@@ -256,7 +256,7 @@ export default function ContactWidget({ lang = 'es' }) {
       {/* Callback Form */}
       {isOpen && showCallbackForm && (
         <div className="mb-4 w-[300px] sm:w-[320px] animate-fade-in">
-          <div className="bg-paradise-950/95 backdrop-blur-2xl rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
+          <div className="bg-paradise-950 rounded-2xl border border-white/10 shadow-lg overflow-hidden">
             {/* Header */}
             <div className="px-5 py-3.5 flex items-center justify-between border-b border-white/5 bg-gradient-to-r from-orange-500/10 to-transparent">
               <div className="flex items-center gap-2.5">
@@ -305,7 +305,7 @@ export default function ContactWidget({ lang = 'es' }) {
                 />
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-xs uppercase tracking-widest py-3.5 rounded-xl transition-all active:scale-[0.98] shadow-lg shadow-orange-500/20"
+                  className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-xs uppercase tracking-widest py-3.5 rounded-xl transition-all active:scale-[0.98]"
                 >
                   <Send size={14} />
                   {t.send}
