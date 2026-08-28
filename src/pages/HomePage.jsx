@@ -2,7 +2,7 @@
 // HomePage — Paradise Premium Rentals — Hero Image & Orange Headers
 // --------------------------------------------------------
 import { useToast } from '../components/ToastProvider';
-import { Search, Building2, Trees, Ship, Star, Award, MapPin, ChevronRight, Zap, MessageCircle, Phone } from 'lucide-react';
+import { Search, Building2, Trees, Ship, Star, Award, MapPin, ChevronRight, Zap, MessageCircle, Phone, Map } from 'lucide-react';
 import { Link, useOutletContext } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
@@ -207,7 +207,34 @@ export default function HomePage() {
                      <Trash2 size={16} />
                    </button>
                 </div>
-              ))}
+               ))}
+            </div>
+
+           {/* Direct Contact Section */}
+           <div className="mt-20 bg-paradise-900/50 border border-emerald-500/20 backdrop-blur-md rounded-[40px] p-8 md:p-12 shadow-2xl">
+             <div className="text-center mb-10">
+               <h2 className="text-3xl md:text-4xl font-black text-paradise-50 mb-3">{lang === 'es' ? '¿Necesitas asesoría personalizada?' : 'Need personalized assistance?'}</h2>
+               <p className="text-paradise-300 text-lg font-light max-w-2xl mx-auto">{lang === 'es' ? 'Contacta directamente a nuestros socios fundadores a través del chat en la esquina inferior derecha.' : 'Contact our founding partners directly through the chat in the bottom right corner.'}</p>
+             </div>
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                {/* Andrea */}
+                <div className="glass-card p-8 rounded-3xl border-white/5 bg-white/5 flex flex-col items-center text-center gap-5 hover:border-emerald-500/30 transition-colors shadow-xl">
+                  <img src="/assets/andrea.jpeg" alt="Andrea" className="w-24 h-24 rounded-full border-4 border-emerald-500/20 object-cover shadow-2xl" />
+                  <div>
+                    <h3 className="text-paradise-50 font-black text-2xl">Andrea</h3>
+                    <p className="text-[10px] text-emerald-400 font-black uppercase tracking-widest mt-1">Socia Fundadora</p>
+                  </div>
+                </div>
+
+                {/* Gustavo */}
+                <div className="glass-card p-8 rounded-3xl border-white/5 bg-white/5 flex flex-col items-center text-center gap-5 hover:border-emerald-500/30 transition-colors shadow-xl">
+                  <img src="/assets/gustavo.jpeg" alt="Gustavo" className="w-24 h-24 rounded-full border-4 border-emerald-500/20 object-cover shadow-2xl" />
+                  <div>
+                    <h3 className="text-paradise-50 font-black text-2xl">Gustavo</h3>
+                    <p className="text-[10px] text-emerald-400 font-black uppercase tracking-widest mt-1">Socio Fundador</p>
+                  </div>
+                </div>
+             </div>
            </div>
 
 
