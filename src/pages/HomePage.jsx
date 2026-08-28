@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 const CATEGORIES = [
   { id: 'apts', icon: Building2, to: '/apartments' },
   { id: 'fincas', icon: Trees, to: '/fincas' },
+  { id: 'guide', icon: Map, to: '/medellin-guide' },
 ];
 
 import { getProperties, removeProperty, isAuthorized } from '../lib/store';
@@ -57,6 +58,7 @@ export default function HomePage() {
   const CAT_INFO = [
     { title: t.cat_apartments, count: '30+' },
     { title: t.cat_fincas, count: '15+' },
+    { title: lang === 'es' ? 'Guía Medellín' : 'Medellín Guide', count: '10+' },
   ];
 
   return (
