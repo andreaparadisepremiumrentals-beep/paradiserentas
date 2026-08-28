@@ -210,48 +210,7 @@ export default function HomePage() {
               ))}
            </div>
 
-           {/* Direct Contact Section */}
-           <div className="mt-20 bg-paradise-900/50 border border-emerald-500/20 backdrop-blur-md rounded-[40px] p-8 md:p-12 shadow-2xl">
-             <div className="text-center mb-10">
-               <h2 className="text-3xl md:text-4xl font-black text-paradise-50 mb-3">{lang === 'es' ? '¿Necesitas asesoría personalizada?' : 'Need personalized assistance?'}</h2>
-               <p className="text-paradise-300 text-lg font-light max-w-2xl mx-auto">{lang === 'es' ? 'Contacta directamente a nuestros socios fundadores para encontrar tu propiedad ideal o resolver cualquier duda.' : 'Contact our founding partners directly to find your ideal property or resolve any questions.'}</p>
-             </div>
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-                {/* Andrea */}
-                <div className="glass-card p-8 rounded-3xl border-white/5 bg-white/5 flex flex-col items-center text-center gap-5 hover:border-emerald-500/30 transition-colors shadow-xl">
-                  <img src="/assets/andrea.jpeg" alt="Andrea" className="w-24 h-24 rounded-full border-4 border-emerald-500/20 object-cover shadow-2xl" />
-                  <div>
-                    <h3 className="text-paradise-50 font-black text-2xl">Andrea</h3>
-                    <p className="text-[10px] text-emerald-400 font-black uppercase tracking-widest mt-1">Socia Fundadora</p>
-                  </div>
-                  <div className="flex flex-col sm:flex-row gap-3 w-full mt-4">
-                    <a href="https://wa.me/573054687173" target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 p-4 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 rounded-2xl text-xs font-black uppercase transition-all">
-                      <MessageCircle size={18} /> WhatsApp
-                    </a>
-                    <a href="tel:573054687173" className="flex-1 flex items-center justify-center gap-2 p-4 bg-white/5 hover:bg-white/10 text-paradise-300 rounded-2xl text-xs font-black uppercase transition-all">
-                      <Phone size={18} /> Llamar
-                    </a>
-                  </div>
-                </div>
 
-                {/* Gustavo */}
-                <div className="glass-card p-8 rounded-3xl border-white/5 bg-white/5 flex flex-col items-center text-center gap-5 hover:border-emerald-500/30 transition-colors shadow-xl">
-                  <img src="/assets/gustavo.jpeg" alt="Gustavo" className="w-24 h-24 rounded-full border-4 border-emerald-500/20 object-cover shadow-2xl" />
-                  <div>
-                    <h3 className="text-paradise-50 font-black text-2xl">Gustavo</h3>
-                    <p className="text-[10px] text-emerald-400 font-black uppercase tracking-widest mt-1">Socio Fundador</p>
-                  </div>
-                  <div className="flex flex-col sm:flex-row gap-3 w-full mt-4">
-                    <a href="https://wa.me/573104507952" target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 p-4 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 rounded-2xl text-xs font-black uppercase transition-all">
-                      <MessageCircle size={18} /> WhatsApp
-                    </a>
-                    <a href="tel:573104507952" className="flex-1 flex items-center justify-center gap-2 p-4 bg-white/5 hover:bg-white/10 text-paradise-300 rounded-2xl text-xs font-black uppercase transition-all">
-                      <Phone size={18} /> Llamar
-                    </a>
-                  </div>
-                </div>
-             </div>
-           </div>
         </div>
       </section>
 
