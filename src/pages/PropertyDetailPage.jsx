@@ -228,7 +228,33 @@ export default function PropertyDetailPage() {
                </div>
 
                <div className="space-y-4">
+                 <p className="text-[10px] text-paradise-400 font-bold uppercase tracking-widest text-center mb-2">
+                   {lang === 'es' ? 'Contacta a un Socio' : 'Contact a Partner'}
+                 </p>
+                 
+                 <div className="grid grid-cols-1 gap-3">
+                   {/* Andrea Contact */}
+                   <div className="glass-card p-4 rounded-3xl border-white/5 bg-white/5 space-y-3">
+                     <div className="flex items-center gap-3">
+                       <img src="/assets/andrea.jpeg" className="w-10 h-10 rounded-full border border-emerald-500/30 object-cover" />
+                       <div>
+                         <p className="text-paradise-50 font-bold text-sm">Andrea</p>
+                         <p className="text-[8px] text-emerald-400 font-black uppercase tracking-widest">Socia Fundadora</p>
+                       </div>
+                     </div>
+                   </div>
 
+                   {/* Gustavo Contact */}
+                   <div className="glass-card p-4 rounded-3xl border-white/5 bg-white/5 space-y-3">
+                     <div className="flex items-center gap-3">
+                       <img src="/assets/gustavo.jpeg" className="w-10 h-10 rounded-full border border-emerald-500/30 object-cover" />
+                       <div>
+                         <p className="text-paradise-50 font-bold text-sm">Gustavo</p>
+                         <p className="text-[8px] text-emerald-400 font-black uppercase tracking-widest">Socio Fundador</p>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
 
                  {/* Video Link if exists */}
                  {property.videoUrl && (
@@ -243,6 +269,18 @@ export default function PropertyDetailPage() {
                  )}
                </div>
 
+               <div className="mt-8 pt-8 border-t border-white/5">
+                 <div className="flex items-center gap-4">
+                    <div className="flex -space-x-3">
+                      <img src="/assets/andrea.jpeg" className="w-10 h-10 rounded-full border-2 border-paradise-900 object-cover" />
+                      <img src="/assets/gustavo.jpeg" className="w-10 h-10 rounded-full border-2 border-paradise-900 object-cover" />
+                    </div>
+                    <div>
+                      <p className="text-paradise-50 font-bold text-xs">Andrea & Gustavo</p>
+                      <p className="text-[9px] text-emerald-400 font-black uppercase tracking-widest">SOCIOS FUNDADORES</p>
+                    </div>
+                 </div>
+               </div>
 
             </div>
           </div>
