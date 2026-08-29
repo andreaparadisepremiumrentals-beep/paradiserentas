@@ -31,6 +31,7 @@ dist-ssr
 
 # Varia
 error.txt
+.agents/
 build_error.log
 result.txt
 db_check.txt
