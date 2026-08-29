@@ -269,18 +269,7 @@ export default function PropertyDetailPage() {
                  )}
                </div>
 
-               <div className="mt-8 pt-8 border-t border-white/5">
-                 <div className="flex items-center gap-4">
-                    <div className="flex -space-x-3">
-                      <img src="/assets/andrea.jpeg" className="w-10 h-10 rounded-full border-2 border-paradise-900 object-cover" />
-                      <img src="/assets/gustavo.jpeg" className="w-10 h-10 rounded-full border-2 border-paradise-900 object-cover" />
-                    </div>
-                    <div>
-                      <p className="text-paradise-50 font-bold text-xs">Andrea & Gustavo</p>
-                      <p className="text-[9px] text-emerald-400 font-black uppercase tracking-widest">SOCIOS FUNDADORES</p>
-                    </div>
-                 </div>
-               </div>
+
 
             </div>
           </div>

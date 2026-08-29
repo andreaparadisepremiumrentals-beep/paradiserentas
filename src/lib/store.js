@@ -22,6 +22,7 @@ const INITIAL_PROPERTIES = [
     category: 'apartment',
     status: 'available',
     isMock: true,
+    display_order: 1,
     created_at: new Date().toISOString()
   },
   {
@@ -44,6 +45,7 @@ const INITIAL_PROPERTIES = [
     category: 'apartment',
     status: 'available',
     isMock: true,
+    display_order: 2,
     created_at: new Date(Date.now() - 100000).toISOString()
   },
   {
@@ -66,6 +68,7 @@ const INITIAL_PROPERTIES = [
     category: 'finca',
     status: 'available',
     isMock: true,
+    display_order: 3,
     created_at: new Date(Date.now() - 200000).toISOString()
   },
   {
@@ -88,6 +91,7 @@ const INITIAL_PROPERTIES = [
     category: 'vehicle',
     status: 'available',
     isMock: true,
+    display_order: 4,
     created_at: new Date(Date.now() - 300000).toISOString()
   }
 ];
@@ -122,11 +126,23 @@ export const getProperties = async (category = null) => {
   const cached = cacheGet(cacheKey);
   if (cached) return cached;
 
-  try {
-    let query = supabase.from('properties').select('*').order('created_at', { ascending: false });
+  // Helper: fetch with a given ordering.
+  const fetchWith = async (orderColumn, ascending) => {
+    let query = supabase.from('properties').select('*')
+      .order(orderColumn, { ascending })
+      .order('created_at', { ascending: false });
     if (category) query = query.eq('category', category);
+    return query;
+  };
 
-    const { data, error } = await query;
+  try {
+    let { data, error } = await fetchWith('display_order', true);
+
+    // If display_order column doesn't exist yet (migration not applied),
+    // gracefully fall back to created_at ordering.
+    if (error && /display_order|column|does not exist/i.test(error.message || '')) {
+      ({ data, error } = await fetchWith('created_at', false));
+    }
 
     if (!error && data && data.length > 0) {
       cacheSet(cacheKey, data);
@@ -166,7 +182,20 @@ export const isAuthorized = (rawEmail) => {
 
 export const addProperty = async (prop) => {
   try {
+    let display_order;
+    try {
+      // Assign display_order = max + 1 so new listings append at the end.
+      const { data: existing } = await supabase.from('properties').select('display_order').order('display_order', { ascending: false }).limit(1);
+      const maxOrder = existing && existing.length > 0 ? (existing[0].display_order || 0) : 0;
+      display_order = maxOrder + 1;
+    } catch {
+      // display_order column not present yet — omit it, let the DB default.
+      display_order = undefined;
+    }
+
     const propToInsert = { ...prop, created_at: new Date().toISOString() };
+    if (display_order !== undefined) propToInsert.display_order = display_order;
+
     const { data, error } = await supabase.from('properties').insert([propToInsert]).select();
     if (error) throw new Error(error.message);
     cacheInvalidate(); // bust cache so next fetch gets fresh data
@@ -207,6 +236,37 @@ export const updateProperty = async (id, updates) => {
     cacheInvalidate();
     return null;
   } catch (e) {
+    throw e;
+  }
+};
+
+/**
+ * Persist a new ordering for a list of properties by updating each row's
+ * display_order with a per-row UPDATE (a single upsert with partial columns
+ * fails the not-null constraint on required fields like title).
+ * @param {Array<{id: string}>} orderedItems  Property list in the new order.
+ */
+export const updateDisplayOrder = async (orderedItems) => {
+  const rows = orderedItems
+    .map((item, index) => ({ id: item.id, display_order: index + 1 }))
+    .filter(row => isUuid(row.id)); // mock IDs are local-only, skip them
+
+  if (rows.length === 0) {
+    cacheInvalidate();
+    return;
+  }
+
+  try {
+    await Promise.all(rows.map(async (row) => {
+      const { error } = await supabase
+        .from('properties')
+        .update({ display_order: row.display_order })
+        .eq('id', row.id);
+      if (error) throw error;
+    }));
+    cacheInvalidate(); // bust cache so ordering appears on next visit
+  } catch (e) {
+    console.error('Error updating display order:', e);
     throw e;
   }
 };

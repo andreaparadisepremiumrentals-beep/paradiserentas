@@ -127,23 +127,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── Categorías ─── */}
       <section className="px-6 md:px-12 -mt-8 relative z-20 pb-32">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {CATEGORIES.map((cat, i) => (
-            <Link
-              key={i}
-              to={cat.to}
-              className="group flex flex-col items-center p-12 rounded-[50px] transition-all duration-700 hover:bg-white/[0.02] border border-transparent hover:border-emerald-500/10"
-            >
-              <div className="w-28 h-28 flex items-center justify-center text-paradise-400 mb-8 group-hover:scale-110 transition-transform">
-                <cat.icon size={72} strokeWidth={0.75} className="group-hover:text-emerald-400 transition-colors" />
-              </div>
-              <h3 className="text-[13px] font-bold uppercase tracking-[0.5em] mb-4 text-paradise-100 group-hover:text-emerald-400 transition-colors">{CAT_INFO[i].title}</h3>
-              <p className="text-[10px] text-paradise-500 font-bold uppercase tracking-widest">{CAT_INFO[i].count} {t.cat_listings}</p>
-            </Link>
-          ))}
-        </div>
 
         {/* PROPIEDADES DESTACADAS */}
         <div className="max-w-7xl mx-auto mt-32">
@@ -212,8 +196,25 @@ export default function HomePage() {
                ))}
             </div>
 
+           {/* ─── Categorías ─── */}
+           <div className="grid grid-cols-1 md:grid-cols-3 gap-16 mt-28">
+             {CATEGORIES.map((cat, i) => (
+               <Link
+                 key={i}
+                 to={cat.to}
+                 className="group flex flex-col items-center p-12 rounded-[50px] transition-all duration-700 hover:bg-white/[0.02] border border-transparent hover:border-emerald-500/10"
+               >
+                 <div className="w-28 h-28 flex items-center justify-center text-paradise-400 mb-8 group-hover:scale-110 transition-transform">
+                   <cat.icon size={72} strokeWidth={0.75} className="group-hover:text-emerald-400 transition-colors" />
+                 </div>
+                 <h3 className="text-[13px] font-bold uppercase tracking-[0.5em] mb-4 text-paradise-100 group-hover:text-emerald-400 transition-colors">{CAT_INFO[i].title}</h3>
+                 <p className="text-[10px] text-paradise-500 font-bold uppercase tracking-widest">{CAT_INFO[i].count} {t.cat_listings}</p>
+               </Link>
+             ))}
+           </div>
+
            {/* Direct Contact Section */}
-           <div className="mt-20 bg-paradise-900/50 border border-emerald-500/20 backdrop-blur-md rounded-[40px] p-8 md:p-12 shadow-2xl">
+           <div className="mt-28 bg-paradise-900/50 border border-emerald-500/20 backdrop-blur-md rounded-[40px] p-8 md:p-12 shadow-2xl">
              <div className="text-center mb-10">
                <h2 className="text-3xl md:text-4xl font-black text-paradise-50 mb-3">{lang === 'es' ? '¿Necesitas asesoría personalizada?' : 'Need personalized assistance?'}</h2>
                <p className="text-paradise-300 text-lg font-light max-w-2xl mx-auto">{lang === 'es' ? 'Contacta directamente a nuestros socios fundadores a través del chat en la esquina inferior derecha.' : 'Contact our founding partners directly through the chat in the bottom right corner.'}</p>

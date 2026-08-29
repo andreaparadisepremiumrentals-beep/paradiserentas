@@ -50,14 +50,6 @@ export default function Footer({ lang, t }) {
             <NavLink to="/medellin-guide" className="text-sm text-paradise-300 hover:text-white transition-colors">{t.nav_medellin}</NavLink>
             <NavLink to="/ai-center" className="text-sm text-paradise-300 hover:text-white transition-colors">{t.nav_ai}</NavLink>
           </nav>
-          <div className="mt-2">
-            <NavLink 
-              to="/publish" 
-              className="inline-block bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] transition-all active:scale-95 shadow-md whitespace-nowrap"
-            >
-              {t.nav_publish || (lang === 'es' ? 'Publicar' : 'Publish')}
-            </NavLink>
-          </div>
         </div>
 
         {/* Legal Links */}
@@ -94,6 +86,14 @@ export default function Footer({ lang, t }) {
             <div className="flex items-center gap-4">
               <Mail size={18} className="text-orange-500" />
               <a href="mailto:info@paradiserentas.com" className="text-sm text-paradise-300 hover:text-white">info@paradiserentas.com</a>
+            </div>
+            <div className="mt-2">
+              <NavLink 
+                to="/publish" 
+                className="inline-block bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] transition-all active:scale-95 shadow-md whitespace-nowrap"
+              >
+                {t.nav_publish || (lang === 'es' ? 'Publicar' : 'Publish')}
+              </NavLink>
             </div>
           </div>
         </div>

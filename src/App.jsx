@@ -67,6 +67,7 @@ import AboutPage from './pages/AboutPage';
 import MedellinGuidePage from './pages/MedellinGuidePage';
 import PublishPage from './pages/PublishPage';
 import PropertyDetailPage from './pages/PropertyDetailPage';
+import ListingsManager from './modules/ListingsManager';
 import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
 import GuestSignPage from './pages/GuestSignPage';
@@ -87,6 +88,7 @@ export default function App() {
             <Route path="support" element={<SupportPage />} />
             <Route path="ai-center" element={<AICenterPage />} />
             <Route path="publish" element={<PublishPage />} />
+            <Route path="manage" element={<ListingsManager />} />
             <Route path="property/:id" element={<PropertyDetailPage />} />
             <Route path="privacy" element={<PrivacyPage />} />
             <Route path="terms" element={<TermsPage />} />

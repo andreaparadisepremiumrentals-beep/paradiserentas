@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Camera, Video, Plus, Trash2, Home, Building2, Ship, MapPin, DollarSign, ListChecks, Pencil, Star, ImagePlus } from 'lucide-react';
+import { Camera, Video, Plus, Trash2, Home, Building2, Ship, MapPin, DollarSign, ListChecks, Pencil, Star, ImagePlus, ListOrdered } from 'lucide-react';
 import { useOutletContext, useNavigate, useSearchParams } from 'react-router-dom';
 import { addProperty, getProperty, updateProperty, isAuthorized } from '../lib/store';
 import { uploadToR2 } from '../lib/r2Upload';
@@ -239,6 +239,12 @@ export default function PublishPage() {
         <p className="text-paradise-400 font-medium">
           {editId ? (lang === 'es' ? 'Actualiza los detalles de tu anuncio.' : 'Update your listing details.') : (lang === 'es' ? 'Acceso exclusivo para socios.' : 'Exclusive access for partners.')}
         </p>
+        <button
+          onClick={() => navigate('/manage')}
+          className="mt-4 inline-flex items-center gap-2 text-xs font-bold text-orange-400 hover:text-orange-300 transition-colors"
+        >
+          <ListOrdered size={14} /> {lang === 'es' ? 'Gestionar inventario y orden' : 'Manage inventory & order'}
+        </button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
