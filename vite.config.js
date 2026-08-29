@@ -9,4 +9,11 @@ export default defineConfig({
     tailwindcss(),
   ],
   base: '/',
+  server: {
+    watch: {
+      // Ignore editor/agent temp swap files (e.g. .App.jsx.1234.uuid.tmpdir/)
+      // so the Windows chokidar watcher doesn't crash with EBUSY.
+      ignored: ['**/.*.tmpdir/**', '**/.*.tmp'],
+    },
+  },
 });
