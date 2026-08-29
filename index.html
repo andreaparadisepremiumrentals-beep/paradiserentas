@@ -3,18 +3,135 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Paradise Premium Rentals &amp; Sales — Propiedades de lujo, fincas exclusivas, vehículos acuáticos y herramientas de IA para el mercado inmobiliario premium." />
-    <title>Paradise Premium Rentals &amp; Sales</title>
+    <meta name="theme-color" content="#020617" />
+
+    <!-- ─── SEO Principal ─── -->
+    <title>Paradise Premium Rentals & Sales | Rentas y Ventas de Lujo en Medellín</title>
+    <meta name="description" content="Paradise Premium Rentals & Sales: apartamentos de lujo, fincas exclusivas y experiencias náuticas premium en Medellín, el Área Metropolitana y Antioquia, Colombia. Potenciado por IA." />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Paradise Premium Rentals & Sales" />
+    <link rel="canonical" href="https://www.paradiserentas.com/" />
+    <link rel="alternate" hreflang="es" href="https://www.paradiserentas.com/" />
+    <link rel="alternate" hreflang="en" href="https://www.paradiserentas.com/" />
+    <link rel="alternate" hreflang="x-default" href="https://www.paradiserentas.com/" />
+
+    <!-- ─── Geo (SEO Local) ─── -->
+    <meta name="geo.region" content="CO-ANT" />
+    <meta name="geo.placename" content="Medellín" />
+    <meta name="geo.position" content="6.2088;-75.5679" />
+    <meta name="ICBM" content="6.2088, -75.5679" />
+
+    <!-- ─── Open Graph ─── -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Paradise Premium Rentals & Sales" />
+    <meta property="og:title" content="Paradise Premium Rentals & Sales | Rentas y Ventas de Lujo en Medellín" />
+    <meta property="og:description" content="Apartamentos de lujo, fincas exclusivas y experiencias náuticas premium en Medellín, el Área Metropolitana y Antioquia, Colombia." />
+    <meta property="og:url" content="https://www.paradiserentas.com/" />
+    <meta property="og:image" content="https://www.paradiserentas.com/assets/hero-medellin.png" />
+    <meta property="og:locale" content="es_CO" />
+    <meta property="og:locale:alternate" content="en_US" />
+
+    <!-- ─── Twitter Card ─── -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Paradise Premium Rentals & Sales | Rentas y Ventas de Lujo en Medellín" />
+    <meta name="twitter:description" content="Apartamentos de lujo, fincas exclusivas y experiencias náuticas premium en Medellín y Antioquia, Colombia." />
+    <meta name="twitter:image" content="https://www.paradiserentas.com/assets/hero-medellin.png" />
+
+    <!-- ─── Icono ─── -->
+    <link rel="icon" type="image/png" href="/assets/logoparadise.png" />
+
+    <!-- ─── Fuentes ─── -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- ─── Datos Estructurados (JSON-LD) — Nivel sitio ─── -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "RealEstateAgent",
+          "@id": "https://www.paradiserentas.com/#organization",
+          "name": "Paradise Premium Rentals & Sales",
+          "alternateName": "Paradise Premium",
+          "description": "Agencia inmobiliaria y de hospitalidad de lujo en Medellín y Antioquia: apartamentos amoblados, fincas recreativas y experiencias náuticas premium.",
+          "url": "https://www.paradiserentas.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.paradiserentas.com/assets/logoparadise.png"
+          },
+          "image": "https://www.paradiserentas.com/assets/hero-medellin.png",
+          "email": "info@paradiserentas.com",
+          "telephone": "+573015176590",
+          "priceRange": "$$$",
+          "foundingDate": "2014",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "El Poblado",
+            "addressLocality": "Medellín",
+            "addressRegion": "Antioquia",
+            "postalCode": "050021",
+            "addressCountry": "CO"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 6.2088,
+            "longitude": -75.5679
+          },
+          "areaServed": [
+            { "@type": "City", "name": "Medellín" },
+            { "@type": "AdministrativeArea", "name": "Antioquia" },
+            { "@type": "Country", "name": "Colombia" }
+          ],
+          "openingHoursSpecification": [
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+              "opens": "08:00",
+              "closes": "18:00"
+            }
+          ],
+          "contactPoint": [
+            {
+              "@type": "ContactPoint",
+              "telephone": "+573015176590",
+              "contactType": "customer service",
+              "areaServed": "CO",
+              "availableLanguage": ["es", "en"]
+            }
+          ],
+          "sameAs": [
+            "https://www.instagram.com/paradisepremium.co",
+            "https://www.facebook.com/paradisepremium.co",
+            "https://www.youtube.com/@paradisepremium"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://www.paradiserentas.com/#website",
+          "url": "https://www.paradiserentas.com/",
+          "name": "Paradise Premium Rentals & Sales",
+          "inLanguage": "es-CO",
+          "publisher": { "@id": "https://www.paradiserentas.com/#organization" },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://www.paradiserentas.com/apartments?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Redirección SPA para GitHub Pages -->
     <script type="text/javascript">
-      // ----------------------------------------------------------------------
-      // SPA Redirect script for GitHub Pages
-      // ----------------------------------------------------------------------
       (function(l) {
         if (l.search[1] === '/' ) {
-          var decoded = l.search.slice(1).split('&').map(function(s) { 
+          var decoded = l.search.slice(1).split('&').map(function(s) {
             return s.replace(/~and~/g, '&')
           }).join('?');
           window.history.replaceState(null, null,
@@ -23,9 +140,11 @@
         }
       }(window.location))
     </script>
-    <script type="module" crossorigin src="/assets/index--3re41Ls.js"></script>
+    <script type="module" crossorigin src="/assets/index-C0T559Q3.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/chunk-DECur_0Z.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-vw4Xrkee.css">
+    <link rel="modulepreload" crossorigin href="/assets/tslib.es6-Bhe-I_T4.js">
+    <link rel="modulepreload" crossorigin href="/assets/store-r4gW444I.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-DcE0AmqD.css">
   </head>
   <body>
     <div id="root"></div>

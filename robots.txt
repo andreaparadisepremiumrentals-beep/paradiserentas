@@ -1,0 +1,14 @@
+# robots.txt — Paradise Premium Rentals & Sales
+# https://www.paradiserentas.com
+
+User-agent: *
+Allow: /
+
+# Rutas privadas / sin valor de indexación
+Disallow: /manage
+Disallow: /publish
+Disallow: /sign/
+Disallow: /ai-center
+
+# Sitemaps
+Sitemap: https://www.paradiserentas.com/sitemap.xml
