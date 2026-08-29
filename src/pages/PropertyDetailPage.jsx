@@ -13,6 +13,8 @@ import { useOutletContext } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 
 import { getProperty } from '../lib/store';
+import { useSeo } from '../lib/seo';
+import { absoluteUrl } from '../lib/site';
 
 export default function PropertyDetailPage() {
   const { id } = useParams();
@@ -102,6 +104,42 @@ export default function PropertyDetailPage() {
   }, [isGalleryOpen, property]);
 
   // Removed collage wheel listener
+
+  // SEO específico de la propiedad (Product + Offer + breadcrumb)
+  useSeo(
+    property
+      ? {
+          title: property.title,
+          description: (property.description || 'Propiedad premium en Medellín y Antioquia.').slice(0, 300),
+          path: `/property/${id}`,
+          image: property.images?.[0] || '/assets/hero-medellin.png',
+          breadcrumb: [
+            { name: 'Inicio', path: '/' },
+            {
+              name: property.category === 'finca' ? 'Fincas' : property.category === 'vehicle' ? 'Vehículos Acuáticos' : 'Apartamentos',
+              path: property.category === 'finca' ? '/fincas' : property.category === 'vehicle' ? '/water-vehicles' : '/apartments',
+            },
+            { name: property.title, path: `/property/${id}` },
+          ],
+          jsonLd: [
+            {
+              '@context': 'https://schema.org',
+              '@type': 'Product',
+              name: property.title,
+              description: property.description,
+              image: property.images?.[0] || absoluteUrl('/assets/hero-medellin.png'),
+              offers: {
+                '@type': 'Offer',
+                price: property.price,
+                priceCurrency: 'COP',
+                availability: 'https://schema.org/InStock',
+                url: absoluteUrl(`/property/${id}`),
+              },
+            },
+          ],
+        }
+      : { title: 'Cargando propiedad', description: 'Propiedad premium en Medellín y Antioquia.', path: '/property/' + id }
+  );
 
   if (!property) {
     return (

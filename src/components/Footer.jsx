@@ -48,7 +48,10 @@ export default function Footer({ lang, t }) {
             <NavLink to="/apartments" className="text-sm text-paradise-300 hover:text-white transition-colors">{t.nav_apartments}</NavLink>
             <NavLink to="/fincas" className="text-sm text-paradise-300 hover:text-white transition-colors">{t.nav_fincas}</NavLink>
             <NavLink to="/medellin-guide" className="text-sm text-paradise-300 hover:text-white transition-colors">{t.nav_medellin}</NavLink>
-            <NavLink to="/ai-center" className="text-sm text-paradise-300 hover:text-white transition-colors">{t.nav_ai}</NavLink>
+            <NavLink to="/blog" className="text-sm text-paradise-300 hover:text-white transition-colors">{lang === 'es' ? 'Blog & Guías' : 'Blog & Guides'}</NavLink>
+            <NavLink to="/sectores" className="text-sm text-paradise-300 hover:text-white transition-colors">{lang === 'es' ? 'Sectores' : 'Neighborhoods'}</NavLink>
+            <NavLink to="/datos" className="text-sm text-paradise-300 hover:text-white transition-colors">{lang === 'es' ? 'Datos & Cifras' : 'Facts & Figures'}</NavLink>
+            <NavLink to="/faq" className="text-sm text-paradise-300 hover:text-white transition-colors">{lang === 'es' ? 'Preguntas Frecuentes' : 'FAQ'}</NavLink>
           </nav>
         </div>
 

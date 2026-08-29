@@ -95,11 +95,11 @@ export default function SupportPage() {
             <div className="space-y-4 mb-8">
               <div className="flex items-center gap-3 text-sm text-paradise-300">
                 <Mail size={16} className="text-accent-500" />
-                <span>soporte@paradisepremium.co</span>
+                <span>info@paradiserentas.com</span>
               </div>
               <div className="flex items-center gap-3 text-sm text-paradise-300">
                 <Phone size={16} className="text-accent-500" />
-                <span>+57 (4) 123 4567</span>
+                <span>+57 301 517 6590</span>
               </div>
               <div className="flex items-center gap-3 text-sm text-paradise-300">
                 <MapPin size={16} className="text-accent-500" />
