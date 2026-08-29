@@ -26,6 +26,7 @@ jobs:
           VITE_R2_SECRET_ACCESS_KEY: ${{ secrets.VITE_R2_SECRET_ACCESS_KEY }}
           VITE_R2_BUCKET_NAME: ${{ secrets.VITE_R2_BUCKET_NAME }}
           VITE_R2_PUBLIC_DOMAIN: ${{ secrets.VITE_R2_PUBLIC_DOMAIN }}
+          VITE_GA_MEASUREMENT_ID: ${{ secrets.VITE_GA_MEASUREMENT_ID }}
         run: |
           npm install
           npm run build
