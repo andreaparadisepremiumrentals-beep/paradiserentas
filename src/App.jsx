@@ -59,13 +59,13 @@ const STATIC_SEO = {
     breadcrumb: [{ name: 'Inicio', path: '/' }, { name: 'Fincas', path: '/fincas' }],
   },
   '/water-vehicles': {
-    title: 'Yates y Botes en Guatapé | Experiencias Náuticas Premium',
+    title: 'Yates y Botes en Guatapé',
     description: 'Renta de yates y botes con capitán autorizado y seguro en la represa de Guatapé. Vive la mejor experiencia náutica de Antioquia con grupos privados.',
     path: '/water-vehicles',
     breadcrumb: [{ name: 'Inicio', path: '/' }, { name: 'Vehículos Acuáticos', path: '/water-vehicles' }],
   },
   '/about': {
-    title: 'Nosotros | Paradise Premium Rentals & Sales',
+    title: 'Nosotros',
     description: 'Conoce la historia y visión de Paradise Premium Rentals & Sales: la agencia inmobiliaria y de hospitalidad de lujo que eleva el estándar en Medellín y Antioquia.',
     path: '/about',
     breadcrumb: [{ name: 'Inicio', path: '/' }, { name: 'Nosotros', path: '/about' }],
@@ -77,19 +77,19 @@ const STATIC_SEO = {
     breadcrumb: [{ name: 'Inicio', path: '/' }, { name: 'Guía Medellín', path: '/medellin-guide' }],
   },
   '/support': {
-    title: 'Soporte y Contacto | Paradise Premium',
+    title: 'Soporte y Contacto',
     description: 'Centro de soporte y contacto de Paradise Premium. Resuelve tus dudas y comunícate con nuestros asesores en Medellín, Colombia.',
     path: '/support',
     breadcrumb: [{ name: 'Inicio', path: '/' }, { name: 'Soporte', path: '/support' }],
   },
   '/privacy': {
-    title: 'Política de Privacidad | Paradise Premium',
+    title: 'Política de Privacidad',
     description: 'Política de privacidad y tratamiento de datos personales de Paradise Premium Rentals & Sales.',
     path: '/privacy',
     breadcrumb: [{ name: 'Inicio', path: '/' }, { name: 'Privacidad', path: '/privacy' }],
   },
   '/terms': {
-    title: 'Términos y Condiciones | Paradise Premium',
+    title: 'Términos y Condiciones',
     description: 'Términos y condiciones de uso de los servicios de Paradise Premium Rentals & Sales.',
     path: '/terms',
     breadcrumb: [{ name: 'Inicio', path: '/' }, { name: 'Términos', path: '/terms' }],

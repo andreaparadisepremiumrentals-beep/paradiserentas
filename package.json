@@ -6,7 +6,7 @@
   "description": "Paradise Premium Rentals & Sales — PropTech platform powered by AI",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/prerender.mjs",
     "preview": "vite preview"
   },
   "keywords": [],

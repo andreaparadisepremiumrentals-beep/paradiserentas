@@ -12,6 +12,16 @@ import './index.css';
   try { localStorage.removeItem(key); } catch (_) {}
 });
 
+// GitHub Pages sirve /fincas redirigiendo a /fincas/ (directorio con index.html).
+// Normalizamos la barra final ANTES de montar la app para que React Router
+// reciba la ruta sin el slash final y renderice la página correcta.
+try {
+  const p = window.location.pathname;
+  if (p.length > 1 && p.endsWith('/')) {
+    window.history.replaceState(null, '', p.slice(0, -1) + window.location.search + window.location.hash);
+  }
+} catch (_) {}
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />

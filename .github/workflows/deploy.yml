@@ -28,7 +28,7 @@ jobs:
           VITE_R2_PUBLIC_DOMAIN: ${{ secrets.VITE_R2_PUBLIC_DOMAIN }}
         run: |
           npm install
-          npx vite build
+          npm run build
           echo "www.paradiserentas.com" > dist/CNAME
 
       - name: Deploy 🚀
