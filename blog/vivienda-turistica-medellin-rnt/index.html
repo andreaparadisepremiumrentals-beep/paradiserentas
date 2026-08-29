@@ -127,6 +127,23 @@
     }
     </script>
 
+    <!-- ─── Google Analytics (GA4) ─── -->
+    <script>
+      (function () {
+        var id = '';
+        if (!id || id.indexOf('G-') !== 0) return;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { window.dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', id);
+      })();
+    </script>
+
     <!-- Redirección SPA para GitHub Pages -->
     <script type="text/javascript">
       (function(l) {
@@ -140,11 +157,11 @@
         }
       }(window.location))
     </script>
-    <script type="module" crossorigin src="/assets/index-B_4Xs1Z3.js"></script>
+    <script type="module" crossorigin src="/assets/index-lhZNfiF3.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/chunk-DECur_0Z.js">
     <link rel="modulepreload" crossorigin href="/assets/tslib.es6-Bhe-I_T4.js">
     <link rel="modulepreload" crossorigin href="/assets/store-r4gW444I.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-DcE0AmqD.css">
+    <link rel="stylesheet" crossorigin href="/assets/index-4lQL64g4.css">
   </head>
   <body>
     <div id="root"></div>
