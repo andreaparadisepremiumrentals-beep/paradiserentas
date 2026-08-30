@@ -1,0 +1,43 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://www.paradiserentas.com",
+      "service-doc": [
+        {
+          "href": "https://www.paradiserentas.com/support",
+          "type": "text/html",
+          "title": "Centro de soporte y contacto"
+        }
+      ],
+      "service-desc": [
+        {
+          "href": "https://www.paradiserentas.com/sitemap.xml",
+          "type": "application/xml",
+          "title": "Índice de recursos publicados (sitemap)"
+        }
+      ],
+      "data": [
+        {
+          "href": "https://www.paradiserentas.com/datos",
+          "type": "text/html",
+          "title": "Datos y cifras de Medellín y el mercado"
+        },
+        {
+          "href": "https://www.paradiserentas.com/sectores",
+          "type": "text/html",
+          "title": "Guía de sectores y barrios"
+        }
+      ]
+    },
+    {
+      "anchor": "https://www.paradiserentas.com/blog",
+      "service-doc": [
+        {
+          "href": "https://www.paradiserentas.com/blog",
+          "type": "text/html",
+          "title": "Blog y guías locales de Medellín"
+        }
+      ]
+    }
+  ]
+}

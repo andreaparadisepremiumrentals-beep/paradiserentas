@@ -1,0 +1,106 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "uri": "https://www.paradiserentas.com",
+    "name": "Paradise Premium Rentals & Sales",
+    "description": "Plataforma inmobiliaria y de hospitalidad de lujo en Medellín y Antioquia: apartamentos amoblados, fincas exclusivas y experiencias náuticas premium."
+  },
+  "entries": [
+    {
+      "urn": "urn:air:www.paradiserentas.com:site:home",
+      "displayName": "Inicio — Paradise Premium",
+      "description": "Portal principal con propiedades de lujo, fincas exclusivas y experiencias náuticas en Medellín y Antioquia.",
+      "type": "text/html",
+      "url": "https://www.paradiserentas.com/",
+      "representativeQueries": [
+        "¿Qué propiedades de lujo hay disponibles en Medellín?",
+        "Alquiler de apartamentos premium en El Poblado Medellín",
+        "Fincas exclusivas cerca de Medellín para eventos"
+      ]
+    },
+    {
+      "urn": "urn:air:www.paradiserentas.com:catalog:apartments",
+      "displayName": "Apartamentos y casas amoblados",
+      "description": "Catálogo de residencias amobladas premium en El Poblado, Laureles, San Diego, La Frontera, Envigado y Sabaneta.",
+      "type": "text/html",
+      "url": "https://www.paradiserentas.com/apartments",
+      "representativeQueries": [
+        "Apartamentos amoblados de lujo en El Poblado",
+        "Arriendo de apartamentos premium en Medellín",
+        "Casas amobladas para nómadas digitales en Medellín"
+      ]
+    },
+    {
+      "urn": "urn:air:www.paradiserentas.com:catalog:fincas",
+      "displayName": "Fincas exclusivas en Antioquia",
+      "description": "Fincas de recreo con piscina, jacuzzi y zona BBQ en San Jerónimo, Sopetrán, El Retiro, Barbosa y Girardota.",
+      "type": "text/html",
+      "url": "https://www.paradiserentas.com/fincas",
+      "representativeQueries": [
+        "Fincas para eventos con piscina cerca de Medellín",
+        "Escapadas de fin de semana en fincas de Antioquia",
+        "Fincas de lujo en San Jerónimo para grupos"
+      ]
+    },
+    {
+      "urn": "urn:air:www.paradiserentas.com:catalog:water-vehicles",
+      "displayName": "Experiencias náuticas en Guatapé",
+      "description": "Renta de yates y botes con capitán autorizado y seguro en la represa de Guatapé.",
+      "type": "text/html",
+      "url": "https://www.paradiserentas.com/water-vehicles",
+      "representativeQueries": [
+        "Renta de yates en la represa de Guatapé",
+        "Experiencias náuticas privadas en Antioquia",
+        "Botes para grupos en Guatapé"
+      ]
+    },
+    {
+      "urn": "urn:air:www.paradiserentas.com:guide:medellin",
+      "displayName": "Guía de Medellín",
+      "description": "Guía local con destinos imperdibles y zonas recomendadas: Provenza, Comuna 13, Guatapé, Parque Arví y más.",
+      "type": "text/html",
+      "url": "https://www.paradiserentas.com/medellin-guide",
+      "representativeQueries": [
+        "¿Qué hacer en Medellín?",
+        "Mejores zonas de Medellín para turistas",
+        "Destinos imperdibles de Antioquia"
+      ]
+    },
+    {
+      "urn": "urn:air:www.paradiserentas.com:catalog:sectores",
+      "displayName": "Guía de sectores y barrios",
+      "description": "Barrios de Medellín y municipios cercanos con precios de referencia, ambiente y para quién es ideal cada zona.",
+      "type": "text/html",
+      "url": "https://www.paradiserentas.com/sectores",
+      "representativeQueries": [
+        "Mejores barrios para vivir en Medellín",
+        "Precios de arriendo por sector en Medellín",
+        "¿Dónde vivir en Medellín según presupuesto?"
+      ]
+    },
+    {
+      "urn": "urn:air:www.paradiserentas.com:content:blog",
+      "displayName": "Blog y guías locales",
+      "description": "Artículos sobre vivir, arrendar y disfrutar Medellín y Antioquia: barrios, precios, fincas, experiencias náuticas y consejos para propietarios.",
+      "type": "text/html",
+      "url": "https://www.paradiserentas.com/blog",
+      "representativeQueries": [
+        "Guía para arrendar apartamento amoblado en Medellín",
+        "Precios de arriendo en Medellín 2026",
+        "Cómo rentabilizar una propiedad de lujo"
+      ]
+    },
+    {
+      "urn": "urn:air:www.paradiserentas.com:data:facts",
+      "displayName": "Datos y cifras de Medellín",
+      "description": "Cifras de Medellín, del mercado inmobiliario premium y de Paradise Premium.",
+      "type": "text/html",
+      "url": "https://www.paradiserentas.com/datos",
+      "representativeQueries": [
+        "Cifras del mercado inmobiliario de Medellín",
+        "Datos de la población del Valle de Aburrá",
+        "Clima de Medellín temperatura promedio"
+      ]
+    }
+  ]
+}

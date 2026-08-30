@@ -10,5 +10,11 @@ Disallow: /publish
 Disallow: /sign/
 Disallow: /ai-center
 
+# Preferencias de contenido para agentes de IA (Content-Signals)
+# ai-train=yes  -> permite que las IA entrenen su conocimiento con este contenido
+# search=yes    -> permite que las IA usen el contenido en búsquedas/respuestas
+# ai-input=yes  -> permite que las IA usen el contenido como entrada
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
+
 # Sitemaps
 Sitemap: https://www.paradiserentas.com/sitemap.xml
